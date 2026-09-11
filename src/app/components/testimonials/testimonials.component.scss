@@ -1,0 +1,150 @@
+@use '../../../styles/variables' as *;
+@use '../../../styles/responsive' as *;
+
+.testimonials-section {
+  position: relative;
+  overflow: hidden;
+}
+
+.testimonials-slider {
+  max-width: 860px;
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+}
+
+.reviews-track {
+  display: flex;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  width: 100%;
+}
+
+.review-slide {
+  min-width: 100%;
+  padding: 0.5rem 1rem;
+}
+
+.review-card {
+  padding: 3rem;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: $radius-xl;
+
+  @include mobile {
+    padding: 1.75rem;
+  }
+
+  .review-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+
+    .stars-row {
+      display: flex;
+      gap: 0.25rem;
+      font-size: 1.1rem;
+    }
+
+    .trip-tag {
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.3rem 0.75rem;
+      background: rgba(255, 193, 7, 0.18);
+      color: #9A6200;
+      border-radius: $radius-full;
+    }
+  }
+
+  .review-comment {
+    font-size: 1.15rem;
+    line-height: 1.7;
+    color: $color-text-primary;
+    font-style: italic;
+    margin-bottom: 2rem;
+
+    @include mobile {
+      font-size: 1rem;
+    }
+  }
+
+  .reviewer-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    .reviewer-avatar {
+      font-size: 2.2rem;
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: #F1F5F9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .reviewer-info {
+      .reviewer-name {
+        font-size: 1.1rem;
+        color: $color-text-primary;
+        margin-bottom: 0.15rem;
+      }
+
+      .reviewer-loc {
+        font-size: 0.82rem;
+        color: $color-text-muted;
+      }
+    }
+  }
+}
+
+.slider-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 2rem;
+
+  .slider-btn {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    color: $color-text-primary;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: $color-primary;
+      border-color: $color-primary;
+      transform: scale(1.05);
+    }
+  }
+
+  .slider-dots {
+    display: flex;
+    gap: 0.5rem;
+
+    .dot-btn {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #CBD5E1;
+      border: none;
+      cursor: pointer;
+      transition: all 0.25s ease;
+
+      &.active {
+        background: $color-secondary;
+        width: 24px;
+        border-radius: 5px;
+      }
+    }
+  }
+}

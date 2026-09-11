@@ -1,0 +1,577 @@
+@use '../../../styles/variables' as *;
+@use '../../../styles/responsive' as *;
+
+.hero-section {
+  position: relative;
+  min-height: 100vh;
+  padding-top: 6.5rem;
+  padding-bottom: 4rem;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+// 3D Canvas Background & Viewport
+.hero-3d-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: auto;
+
+  .three-canvas-container {
+    width: 100%;
+    height: 100%;
+    canvas {
+      display: block;
+      width: 100% !important;
+      height: 100% !important;
+    }
+  }
+
+  // Environment Control Overlay
+  .scene-controls-overlay {
+    position: absolute;
+    top: 5.5rem;
+    right: 2rem;
+    display: flex;
+    gap: 0.65rem;
+    z-index: 10;
+
+    @include mobile {
+      top: 4.8rem;
+      right: 1rem;
+    }
+
+    .scene-toggle-btn {
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 0.4rem 0.85rem;
+      border-radius: $radius-full;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      color: $color-text-primary;
+      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+      transition: all 0.2s ease;
+
+      &:hover {
+        transform: translateY(-2px);
+        background: #FFFFFF;
+      }
+
+      &.active {
+        background: #0F172A;
+        color: #FFC107;
+        border-color: #FFC107;
+      }
+    }
+  }
+}
+
+// Layout Container
+.hero-container {
+  position: relative;
+  z-index: 5;
+  width: 100%;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+  align-items: center;
+
+  @include screen-lg {
+    grid-template-columns: 1.15fr 0.95fr;
+    gap: 3.5rem;
+  }
+}
+
+// Left Hero Content
+.hero-content {
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: rgba(255, 255, 255, 0.88);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 193, 7, 0.6);
+    padding: 0.45rem 1.1rem;
+    border-radius: $radius-full;
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    color: #9A6200;
+    box-shadow: 0 4px 15px rgba(255, 193, 7, 0.15);
+    margin-bottom: 1.4rem;
+
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: $color-secondary;
+      animation: beaconPing 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+    }
+  }
+
+  .hero-title {
+    font-size: 2.6rem;
+    line-height: 1.15;
+    margin-bottom: 1.25rem;
+
+    @include screen-md {
+      font-size: 3.5rem;
+    }
+
+    @include screen-xl {
+      font-size: 4rem;
+    }
+
+    .highlight-text {
+      background: linear-gradient(135deg, #D97706 0%, #EA580C 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: inline-block;
+    }
+  }
+
+  .hero-subtitle {
+    font-size: 1.12rem;
+    line-height: 1.65;
+    color: $color-text-secondary;
+    margin-bottom: 2rem;
+    max-width: 580px;
+  }
+
+  .hero-action-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .hero-trust-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(15, 23, 42, 0.08);
+
+    @include mobile {
+      grid-template-columns: 1fr;
+      gap: 0.8rem;
+    }
+
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+
+      .trust-icon {
+        font-size: 1.5rem;
+        line-height: 1;
+      }
+
+      .trust-text {
+        display: flex;
+        flex-direction: column;
+
+        strong {
+          font-size: 0.95rem;
+          // color: $color-text-primary;
+          color:#FFFFFF;
+        }
+
+        span {
+          font-size: 0.75rem;
+          // color: $color-text-muted;
+          color:#0F172A;
+        }
+      }
+    }
+  }
+}
+
+// Right Hero: Calculator Card
+.hero-calculator-column {
+  .calculator-card {
+    padding: 2.2rem;
+    background: rgba(255, 255, 255, 0.88);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1.5px solid rgba(255, 255, 255, 0.95);
+    box-shadow: 0 20px 50px rgba(15, 23, 42, 0.12), 0 0 25px rgba(255, 193, 7, 0.1);
+
+    @include mobile {
+      padding: 1.5rem;
+    }
+
+    .calc-header {
+      margin-bottom: 1.5rem;
+
+      .calc-header-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        background: rgba(211, 47, 47, 0.1);
+        color: $color-secondary;
+        font-size: 0.7rem;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        padding: 0.2rem 0.6rem;
+        border-radius: $radius-full;
+        margin-bottom: 0.5rem;
+      }
+
+      h3 {
+        font-size: 1.7rem;
+        color: $color-text-primary;
+      }
+
+      .calc-rate-badge {
+        font-size: 0.88rem;
+        color: #D97706;
+
+        strong {
+          font-weight: 800;
+          color: $color-text-primary;
+        }
+      }
+    }
+  }
+}
+
+// Trip Toggle Buttons
+.trip-type-toggle {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.4rem;
+  background: #F1F5F9;
+  padding: 0.35rem;
+  border-radius: $radius-full;
+  margin-bottom: 1.25rem;
+
+  .trip-btn {
+    padding: 0.55rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    border-radius: $radius-full;
+    background: transparent;
+    color: $color-text-secondary;
+    transition: all 0.2s ease;
+
+    &.active {
+      background: #FFFFFF;
+      color: $color-text-primary;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+  }
+}
+
+// Vehicle Pills Grid
+.calc-vehicle-selection {
+  margin-bottom: 1.25rem;
+
+  .calc-label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: $color-text-secondary;
+    margin-bottom: 0.5rem;
+  }
+
+  .vehicle-pills-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+
+    @include screen-sm {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .vehicle-pill {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0.6rem 0.4rem;
+      background: #FFFFFF;
+      border: 1.5px solid #E2E8F0;
+      border-radius: $radius-md;
+      transition: all 0.2s ease;
+
+      .v-name {
+        font-size: 0.82rem;
+        font-weight: 700;
+        color: $color-text-primary;
+      }
+
+      .v-rate {
+        font-size: 0.72rem;
+        font-weight: 600;
+        color: #D97706;
+      }
+
+      &.selected {
+        border-color: #FFC107;
+        background: rgba(255, 193, 7, 0.12);
+        box-shadow: 0 0 12px rgba(255, 193, 7, 0.3);
+      }
+    }
+  }
+}
+
+// Pickup & Drop Inputs
+.calc-inputs-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+
+  @include screen-sm {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .calc-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+
+    .calc-label-with-icon {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: $color-text-secondary;
+
+      .dot-indicator {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        display: inline-block;
+
+        &.dot-pickup {
+          background-color: #10B981;
+          box-shadow: 0 0 6px rgba(16, 185, 129, 0.4);
+        }
+
+        &.dot-drop {
+          background-color: #EF4444;
+          box-shadow: 0 0 6px rgba(239, 68, 68, 0.4);
+        }
+      }
+    }
+
+    .custom-select-wrapper {
+      position: relative;
+      width: 100%;
+
+      .calc-select {
+        width: 100%;
+        border: 1.5px solid #CBD5E1;
+        background: #FFFFFF;
+        border-radius: $radius-md;
+        padding: 0.65rem 2.2rem 0.65rem 0.85rem;
+        font-size: 0.88rem;
+        font-weight: 600;
+        color: $color-text-primary;
+        outline: none;
+        appearance: none;
+        -webkit-appearance: none;
+        cursor: pointer;
+        transition: all 0.2s ease;
+
+        &:hover {
+          border-color: #94A3B8;
+        }
+
+        &:focus {
+          border-color: $color-primary;
+          box-shadow: 0 0 0 3px rgba(255, 193, 7, 0.2);
+        }
+
+        option {
+          font-size: 0.88rem;
+          color: $color-text-primary;
+          padding: 0.5rem;
+        }
+      }
+
+      .select-chevron {
+        position: absolute;
+        right: 0.75rem;
+        top: 50%;
+        transform: translateY(-50%);
+        pointer-events: none;
+        color: #64748B;
+        display: flex;
+        align-items: center;
+      }
+    }
+
+    .custom-location-input {
+      width: 100%;
+      border: 1.5px solid #F59E0B;
+      background: #FFFBEB;
+      border-radius: $radius-md;
+      padding: 0.6rem 0.85rem;
+      font-size: 0.85rem;
+      color: $color-text-primary;
+      outline: none;
+      margin-top: 0.35rem;
+      transition: all 0.2s ease;
+
+      &:focus {
+        border-color: #D97706;
+        box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2);
+      }
+    }
+
+    .input-field {
+      width: 100%;
+      border: 1.5px solid #E2E8F0;
+      background: #FFFFFF;
+      border-radius: $radius-md;
+      padding: 0.65rem 0.85rem;
+      font-size: 0.88rem;
+      outline: none;
+      transition: border-color 0.2s;
+
+      &:focus {
+        border-color: $color-primary;
+      }
+    }
+  }
+}
+
+// Distance Slider
+.distance-slider-box {
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: $radius-lg;
+  padding: 1rem 1.2rem;
+  margin-bottom: 1.5rem;
+
+  .distance-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
+
+    .calc-label {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: $color-text-primary;
+    }
+
+    .distance-number-badge {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: #FFFFFF;
+      border: 1px solid #CBD5E1;
+      padding: 0.25rem 0.6rem;
+      border-radius: $radius-sm;
+
+      .distance-input-field {
+        width: 60px;
+        border: none;
+        outline: none;
+        font-size: 1.15rem;
+        font-weight: 800;
+        text-align: right;
+        color: $color-text-primary;
+      }
+
+      .unit {
+        font-size: 0.85rem;
+        font-weight: 700;
+        color: #D97706;
+      }
+    }
+  }
+
+  .distance-range-slider {
+    width: 100%;
+    height: 8px;
+    border-radius: 4px;
+    background: #E2E8F0;
+    outline: none;
+    accent-color: #FFC107;
+    cursor: pointer;
+  }
+
+  .slider-marks {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.72rem;
+    color: $color-text-muted;
+    margin-top: 0.5rem;
+  }
+}
+
+// Live Fare Result Box
+.fare-result-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  padding-top: 1.25rem;
+  border-top: 1.5px dashed #CBD5E1;
+
+  @include mobile {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .fare-result-left {
+    .fare-formula-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: #D97706;
+      display: block;
+    }
+
+    .estimated-price {
+      display: flex;
+      align-items: baseline;
+      gap: 0.2rem;
+      line-height: 1;
+      margin: 0.2rem 0;
+
+      .currency-symbol {
+        font-size: 1.4rem;
+        font-weight: 800;
+        color: $color-secondary;
+      }
+
+      .amount-number {
+        font-family: $font-heading;
+        font-size: 2.3rem;
+        font-weight: 900;
+        color: $color-text-primary;
+      }
+    }
+
+    .fare-subtext {
+      font-size: 0.72rem;
+      color: $color-text-muted;
+    }
+  }
+
+  .calc-book-btn {
+    padding: 0.95rem 1.6rem;
+    font-size: 0.95rem;
+
+    @include mobile {
+      width: 100%;
+    }
+  }
+}

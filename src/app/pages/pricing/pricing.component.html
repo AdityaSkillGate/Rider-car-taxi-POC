@@ -1,0 +1,108 @@
+<div class="pricing-page">
+  <!-- Pricing Hero -->
+  <section class="pricing-hero">
+    <div class="container">
+      <div class="pricing-hero-content">
+        <span class="section-badge">{{ i18n.isTamil() ? '100% வெளிப்படையான கட்டண முறை' : '100% TRANSPARENT BILLING' }}</span>
+        <h1>{{ i18n.isTamil() ? 'நேர்மையான, சிக்கனமான' : 'Simple, Honest' }} <span class="highlight-yellow">{{ i18n.isTamil() ? '₹14/கி.மீ டாக்ஸி கட்டணம்' : '₹14/KM Taxi Tariff' }}</span></h1>
+        <p class="pricing-hero-sub">
+          {{ i18n.isTamil() 
+            ? 'பீக் ஹவர் கூடுதல் கட்டணங்கள் இல்லை. நள்ளிரவு மறைமுக கட்டணங்கள் இல்லை. சரியான கிலோமீட்டர் கணக்கில் வெளிப்படையான கட்டண ரசீதுடன் பயணம்.' 
+            : 'No surge pricing. No midnight surprises. Pay only for the actual kilometres travelled with complete GST billing and official receipts.' }}
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Rate Cards Grid -->
+  <section class="section rate-cards-section">
+    <div class="container">
+      <div class="rate-cards-grid">
+        @for (v of taxiData.vehicleCategories; track v.id) {
+          <div class="rate-card glass-card">
+            <span class="rate-badge">{{ v.badge }}</span>
+            <h3>{{ v.name }}</h3>
+            <p class="rate-models">{{ v.models }}</p>
+
+            <div class="rate-number-box">
+              <span class="currency">₹</span>
+              <span class="rate-number">{{ v.ratePerKm }}</span>
+              <span class="per-km">/ {{ i18n.isTamil() ? 'கி.மீ' : 'KM' }}</span>
+            </div>
+
+            <ul class="rate-details-list">
+              <li><strong>{{ i18n.isTamil() ? 'குறைந்தபட்ச தூரம்:' : 'Min Billing:' }}</strong> {{ i18n.isTamil() ? 'வெளியூர் 100 கி.மீ' : '100 KM outstation' }}</li>
+              <li><strong>{{ i18n.isTamil() ? 'ஓட்டுநர் படி:' : 'Driver Beta:' }}</strong> {{ i18n.isTamil() ? '₹300 / நாள் (வெளியூர்)' : '₹300 / day (Outstation)' }}</li>
+              <li><strong>{{ i18n.isTamil() ? 'இரவு கட்டணம்:' : 'Night Charge:' }}</strong> {{ i18n.isTamil() ? '₹200 (இரவு 10 - காலை 5 வரை)' : '₹200 (10 PM - 5 AM only)' }}</li>
+              <li><strong>{{ i18n.isTamil() ? 'சுங்கச்சாவடி & பாஸ்டேக்:' : 'Tolls & Fastag:' }}</strong> {{ i18n.isTamil() ? 'ரசீது படி நேரடி கட்டணம்' : 'At actual receipts' }}</li>
+              <li><strong>{{ i18n.isTamil() ? 'காத்திருப்பு நேரம்:' : 'Waiting Time:' }}</strong> {{ i18n.isTamil() ? '1 மணி நேரம் இலவசம்' : '1 Hour Free' }}</li>
+            </ul>
+
+            <button (click)="bookQuote()" class="btn btn-whatsapp w-full">
+              <span>{{ i18n.isTamil() ? 'முன்பதிவு செய்க' : 'Book ' + v.name }}</span>
+            </button>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Live Estimator on Pricing Page -->
+  <section class="section live-pricing-section">
+    <div class="container">
+      <div class="estimator-box glass-card">
+        <div class="section-header mb-2">
+          <span class="section-badge">{{ i18n.isTamil() ? 'நேரடி கட்டண கணக்கீடு' : 'LIVE TARIFF ESTIMATOR' }}</span>
+          <h2 class="section-title">{{ i18n.isTamil() ? 'உங்கள் வழித்தட கட்டணத்தை அறியுங்கள்' : 'Test Your Route Fare' }}</h2>
+        </div>
+
+        <div class="estimator-controls-grid">
+          <div class="control-item">
+            <label>{{ i18n.isTamil() ? 'பயண தூரம்:' : 'Distance (KM):' }} {{ testKm }} {{ i18n.isTamil() ? 'கி.மீ' : 'KM' }}</label>
+            <input type="range" [(ngModel)]="testKm" min="10" max="800" step="10" class="distance-range-slider" />
+          </div>
+
+          <div class="control-item">
+            <label>{{ i18n.isTamil() ? 'டாக்ஸி வகை' : 'Vehicle Type' }}</label>
+            <select [(ngModel)]="testVehicle" class="form-control">
+              @for (v of taxiData.vehicleCategories; track v.id) {
+                <option [value]="v.id">{{ v.name }} (₹{{ v.ratePerKm }}/{{ i18n.isTamil() ? 'கி.மீ' : 'KM' }})</option>
+              }
+            </select>
+          </div>
+
+          <div class="control-item">
+            <label>{{ i18n.isTamil() ? 'பயண வகை' : 'Trip Type' }}</label>
+            <select [(ngModel)]="testTrip" class="form-control">
+              <option value="oneway">{{ i18n.isTamil() ? 'ஒரு வழி பயணம் (One Way)' : 'One Way Drop' }}</option>
+              <option value="round">{{ i18n.isTamil() ? 'இரு வழி பயணம் (Round Trip)' : 'Round Trip' }}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="estimator-breakdown-box">
+          <div class="breakdown-item">
+            <span>{{ i18n.isTamil() ? 'அடிப்படை கட்டணம்' : 'Base KM Fare' }} ({{ liveFare.distanceKm }} {{ i18n.isTamil() ? 'கி.மீ' : 'KM' }} × ₹{{ liveFare.ratePerKm }}):</span>
+            <strong>₹{{ liveFare.baseFare }}</strong>
+          </div>
+          <div class="breakdown-item">
+            <span>{{ i18n.isTamil() ? 'ஓட்டுநர் படி / அலவன்ஸ்:' : 'Driver Beta / Allowance:' }}</span>
+            <strong>₹{{ liveFare.driverAllowance }}</strong>
+          </div>
+          <div class="breakdown-item">
+            <span>{{ i18n.isTamil() ? 'தோராய சுங்கச்சாவடி கட்டணம்:' : 'Est. Toll Allowance:' }}</span>
+            <strong>₹{{ liveFare.estimatedToll }}</strong>
+          </div>
+          <div class="breakdown-total">
+            <span>{{ i18n.isTamil() ? 'மொத்த தோராய கட்டணம்:' : 'Estimated Total:' }}</span>
+            <strong class="total-price">₹{{ liveFare.estimatedTotal }}</strong>
+          </div>
+
+          <button (click)="bookQuote()" class="btn btn-primary btn-lg w-full mt-3">
+            <span>{{ i18n.isTamil() ? 'இந்த மதிப்பீட்டை வாட்ஸ்அப்பில் உறுதி செய்க' : 'Confirm This Estimate on WhatsApp' }}</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

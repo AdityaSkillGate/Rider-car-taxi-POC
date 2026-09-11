@@ -1,0 +1,65 @@
+<div class="contact-page">
+  <!-- Contact Hero -->
+  <section class="contact-hero">
+    <div class="container">
+      <div class="contact-hero-content">
+        <span class="section-badge">{{ i18n.isTamil() ? 'தொடர்பு கொள்ள' : 'GET IN TOUCH' }}</span>
+        <h1>{{ i18n.isTamil() ? 'ரைடர் கால் டாக்ஸியை' : 'Contact' }} <span class="highlight-yellow">{{ i18n.isTamil() ? 'தொடர்பு கொள்ளவும்' : 'Rider Call Taxi' }}</span></h1>
+        <p class="contact-hero-sub">
+          {{ i18n.isTamil() 
+            ? 'நாங்கள் 24/7 தயார் நிலையில் உள்ளோம். எங்கள் அவசர உதவி எண்களை உடனே அழைக்கவும், வாட்ஸ்அப்பில் செய்தி அனுப்பவும் அல்லது சங்கரன்கோவில் அலுவலகத்திற்கு நேரில் வருகை தரவும்.' 
+            : 'We are on standby 24/7. Call our dispatch lines directly, send a WhatsApp enquiry, or drop by our Sankarankovil office.' }}
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quick Info Cards -->
+  <section class="section contact-cards-section">
+    <div class="container">
+      <div class="contact-cards-grid">
+        <div class="info-card glass-card">
+          <div class="info-icon">📞</div>
+          <h3>{{ i18n.isTamil() ? '24/7 தொலைபேசி எண்கள்' : '24/7 Phone Lines' }}</h3>
+          <p>{{ i18n.isTamil() ? 'உடனடி டாக்ஸி முன்பதிவு & ஓட்டுநர் தகவல்' : 'Instant cab dispatch & driver enquiry' }}</p>
+          <div class="info-links">
+            <a [href]="'tel:' + taxiData.company.phone1">{{ taxiData.company.phone1 }}</a>
+            <a [href]="'tel:' + taxiData.company.phone2">{{ taxiData.company.phone2 }}</a>
+          </div>
+        </div>
+
+        <div class="info-card glass-card">
+          <div class="info-icon">💬</div>
+          <h3>{{ i18n.isTamil() ? 'வாட்ஸ்அப் உதவி மையம்' : 'WhatsApp Support' }}</h3>
+          <p>{{ i18n.isTamil() ? 'பயண விவரங்களை அனுப்பி 2 நிமிடத்தில் கட்டணம் அறியவும்' : 'Send itinerary and get quote in 2 mins' }}</p>
+          <div class="info-links">
+            <a [href]="taxiData.getWhatsAppEnquiryUrl({})" target="_blank" class="highlight-link">
+              {{ i18n.isTamil() ? 'வாட்ஸ்அப்பில் பேச →' : 'Chat on WhatsApp →' }}
+            </a>
+          </div>
+        </div>
+
+        <div class="info-card glass-card">
+          <div class="info-icon">✉️</div>
+          <h3>{{ i18n.isTamil() ? 'மின்னஞ்சல் முகவரி' : 'Email Address' }}</h3>
+          <p>{{ i18n.isTamil() ? 'கார்ப்பரேட் கணக்குகள் & ரசீது விவரங்கள்' : 'Corporate accounts & billing queries' }}</p>
+          <div class="info-links">
+            <a [href]="'mailto:' + taxiData.company.email">{{ taxiData.company.email }}</a>
+          </div>
+        </div>
+
+        <div class="info-card glass-card">
+          <div class="info-icon">📍</div>
+          <h3>{{ i18n.isTamil() ? 'சங்கரன்கோவில் அலுவலகம்' : 'Sankarankovil Office' }}</h3>
+          <p>{{ taxiData.company.addressLine }}, {{ taxiData.company.city }} – {{ taxiData.company.pincode }}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Enquiry Form Component -->
+  <app-enquiry-form></app-enquiry-form>
+
+  <!-- Google Map & Directions Component -->
+  <app-google-map></app-google-map>
+</div>

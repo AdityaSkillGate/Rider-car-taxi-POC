@@ -1,0 +1,7 @@
+@use '../styles/variables' as *;
+@use '../styles/responsive' as *;
+
+.main-content-wrapper {
+  min-height: calc(100vh - 80px);
+  position: relative;
+}

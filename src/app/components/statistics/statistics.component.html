@@ -1,0 +1,21 @@
+<section class="stats-section">
+  <div class="container">
+    <div class="stats-grid">
+      @for (stat of stats; track stat.id) {
+        <div class="stat-card glass-card">
+          <div class="stat-icon-wrapper">
+            <span class="stat-icon">{{ stat.icon }}</span>
+          </div>
+          <div class="stat-content">
+            <div class="stat-number-wrap">
+              <span [id]="'counter-' + stat.id" class="counter-val">0</span>
+              <span class="suffix">{{ stat.suffix }}</span>
+            </div>
+            <h4 class="stat-label">{{ i18n.t(stat.labelKey) }}</h4>
+            <p class="stat-sub">{{ i18n.t(stat.subKey) }}</p>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>

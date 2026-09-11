@@ -1,0 +1,164 @@
+<section class="section enquiry-section" id="booking-enquiry-section">
+  <div class="container">
+    <div class="enquiry-card-wrapper glass-card">
+      <div class="enquiry-grid">
+        <!-- Left Info Side -->
+        <div class="enquiry-info-pane">
+          <span class="enquiry-badge">{{ i18n.t('form.badge') }}</span>
+          <h2 class="pane-title">{{ i18n.t('form.title') }}</h2>
+          <p class="pane-desc">
+            {{ i18n.t('form.desc') }}
+          </p>
+
+          <div class="perks-list">
+            <div class="perk-item">
+              <span class="perk-icon">⚡</span>
+              <div>
+                <strong>{{ i18n.t('form.perk1Title') }}</strong>
+                <p>{{ i18n.t('form.perk1Desc') }}</p>
+              </div>
+            </div>
+            <div class="perk-item">
+              <span class="perk-icon">💰</span>
+              <div>
+                <strong>{{ i18n.t('form.perk2Title') }}</strong>
+                <p>{{ i18n.t('form.perk2Desc') }}</p>
+              </div>
+            </div>
+            <div class="perk-item">
+              <span class="perk-icon">📞</span>
+              <div>
+                <strong>{{ i18n.t('form.perk3Title') }}</strong>
+                <p>{{ i18n.t('form.perk3Desc') }} <a [href]="'tel:' + taxiData.company.phone1">{{ taxiData.company.phone1 }}</a></p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Form Side -->
+        <div class="enquiry-form-pane">
+          @if (!isSubmitted()) {
+            <form #enquiryForm="ngForm" (ngSubmit)="onSubmit(enquiryForm)" class="booking-form" novalidate>
+              <div class="form-row">
+                <div class="form-group">
+                  <label>{{ i18n.t('form.fullName') }}</label>
+                  <input type="text" 
+                         [(ngModel)]="name" 
+                         name="name" 
+                         #nameRef="ngModel" 
+                         required 
+                         [placeholder]="i18n.isTamil() ? 'உதா. செந்தில் குமார்' : 'e.g. Senthil Kumar'" 
+                         class="form-control" 
+                         [class.is-invalid]="nameRef.invalid && nameRef.touched" />
+                  @if (nameRef.invalid && nameRef.touched) {
+                    <span class="error-msg">{{ i18n.isTamil() ? 'தயவுசெய்து உங்கள் பெயரை உள்ளிடவும்' : 'Please enter your name' }}</span>
+                  }
+                </div>
+
+                <div class="form-group">
+                  <label>{{ i18n.t('form.mobile') }}</label>
+                  <input type="tel" 
+                         [(ngModel)]="phone" 
+                         name="phone" 
+                         #phoneRef="ngModel" 
+                         required 
+                         pattern="[0-9]{10}"
+                         [placeholder]="i18n.isTamil() ? 'உதா. 9876543210' : 'e.g. 9876543210'" 
+                         class="form-control" 
+                         [class.is-invalid]="phoneRef.invalid && phoneRef.touched" />
+                  @if (phoneRef.invalid && phoneRef.touched) {
+                    <span class="error-msg">{{ i18n.isTamil() ? 'சரியான 10 இலக்க மொபைல் எண்ணை உள்ளிடவும்' : 'Enter valid 10-digit mobile number' }}</span>
+                  }
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label>{{ i18n.t('form.pickup') }}</label>
+                  <input type="text" 
+                         [(ngModel)]="pickup" 
+                         name="pickup" 
+                         #pickupRef="ngModel" 
+                         required 
+                         [placeholder]="i18n.isTamil() ? 'உதா. சங்கரன்கோவில் / தென்காசி' : 'e.g. Sankarankovil / Tenkasi'" 
+                         class="form-control" 
+                         [class.is-invalid]="pickupRef.invalid && pickupRef.touched" />
+                  @if (pickupRef.invalid && pickupRef.touched) {
+                    <span class="error-msg">{{ i18n.isTamil() ? 'புறப்படும் இடத்தை உள்ளிடவும்' : 'Enter pickup location' }}</span>
+                  }
+                </div>
+
+                <div class="form-group">
+                  <label>{{ i18n.t('form.drop') }}</label>
+                  <input type="text" 
+                         [(ngModel)]="destination" 
+                         name="destination" 
+                         #destRef="ngModel" 
+                         required 
+                         [placeholder]="i18n.isTamil() ? 'உதா. மதுரை ஏர்போர்ட் / சென்னை' : 'e.g. Madurai Airport / Chennai'" 
+                         class="form-control" 
+                         [class.is-invalid]="destRef.invalid && destRef.touched" />
+                  @if (destRef.invalid && destRef.touched) {
+                    <span class="error-msg">{{ i18n.isTamil() ? 'சேரும் இடத்தை உள்ளிடவும்' : 'Enter drop destination' }}</span>
+                  }
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label>{{ i18n.t('form.date') }}</label>
+                  <input type="date" 
+                         [(ngModel)]="travelDate" 
+                         name="travelDate" 
+                         #dateRef="ngModel" 
+                         required 
+                         class="form-control" 
+                         [class.is-invalid]="dateRef.invalid && dateRef.touched" />
+                  @if (dateRef.invalid && dateRef.touched) {
+                    <span class="error-msg">{{ i18n.isTamil() ? 'பயண தேதியை தேர்வு செய்யவும்' : 'Select date of travel' }}</span>
+                  }
+                </div>
+
+                <div class="form-group">
+                  <label>{{ i18n.t('form.vehicle') }}</label>
+                  <select [(ngModel)]="vehicleType" name="vehicleType" class="form-control">
+                    <option value="Hatchback">{{ i18n.isTamil() ? 'ஹேட்ச்பேக் (பட்ஜெட் ₹14/கி.மீ)' : 'Hatchback (Budget ₹14/KM)' }}</option>
+                    <option value="Sedan">{{ i18n.isTamil() ? 'செடான் (டிசையர் / எட்டியோஸ் ₹15/கி.மீ)' : 'Sedan (Dzire / Etios ₹15/KM)' }}</option>
+                    <option value="SUV">{{ i18n.isTamil() ? 'எஸ்யூவி (இனோவா 7-சீட்டர் ₹19/கி.மீ)' : 'SUV (Innova 7-Seater ₹19/KM)' }}</option>
+                    <option value="Tempo Traveller">{{ i18n.isTamil() ? 'டெம்போ டிராவலர் (14-சீட்டர் ₹24/கி.மீ)' : 'Tempo Traveller (14-Seater ₹24/KM)' }}</option>
+                    <option value="Corporate Luxury">{{ i18n.isTamil() ? 'கார்ப்பரேட் லக்சரி விஐபி' : 'Corporate Luxury VIP' }}</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>{{ i18n.t('form.notes') }}</label>
+                <textarea [(ngModel)]="message" 
+                          name="message" 
+                          rows="3" 
+                          [placeholder]="i18n.isTamil() ? 'உதா. காலை 6 மணிக்கு விமானம், கூடுதல் லக்கேஜ் வசதி தேவை...' : 'e.g. Flight departure at 6 AM, need extra boot space for luggage...'" 
+                          class="form-control"></textarea>
+              </div>
+
+              <button type="submit" class="btn btn-whatsapp btn-lg w-full submit-booking-btn" [disabled]="isSubmitting()">
+                <span>{{ isSubmitting() ? i18n.t('form.connecting') : i18n.t('form.submitBtn') }}</span>
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                  <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+                </svg>
+              </button>
+            </form>
+          } @else {
+            <div class="success-state-box">
+              <div class="success-icon">🎉</div>
+              <h3>{{ i18n.t('form.successTitle') }}</h3>
+              <p>{{ i18n.t('form.successDesc') }}</p>
+              <button (click)="resetForm()" class="btn btn-outline">
+                <span>{{ i18n.t('form.bookAnother') }}</span>
+              </button>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

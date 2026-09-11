@@ -1,0 +1,138 @@
+@use '../../../styles/variables' as *;
+@use '../../../styles/responsive' as *;
+
+.taxi-types-section {
+  position: relative;
+}
+
+.taxi-types-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+
+  @include screen-md {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include screen-xl {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.category-card {
+  position: relative;
+  padding: 2.2rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border-radius: $radius-xl;
+  background: rgba(255, 255, 255, 0.88);
+
+  .category-badge {
+    position: absolute;
+    top: 1.25rem;
+    right: 1.25rem;
+    background: linear-gradient(135deg, #FFC107 0%, #FF9800 100%);
+    color: #1E1B18;
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.3rem 0.75rem;
+    border-radius: $radius-full;
+  }
+
+  .cat-header {
+    margin-bottom: 1rem;
+
+    .cat-title {
+      font-size: 1.6rem;
+      color: $color-text-primary;
+      margin-bottom: 0.25rem;
+    }
+
+    .cat-tagline {
+      font-size: 0.85rem;
+      color: $color-text-muted;
+    }
+  }
+
+  .cat-price-box {
+    display: flex;
+    align-items: baseline;
+    gap: 0.25rem;
+    margin-bottom: 1.25rem;
+    padding: 0.75rem 1rem;
+    background: rgba(255, 193, 7, 0.1);
+    border-radius: $radius-md;
+    width: fit-content;
+
+    .price-val {
+      font-family: $font-heading;
+      font-size: 2rem;
+      font-weight: 900;
+      color: $color-secondary;
+    }
+
+    .price-unit {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: $color-text-secondary;
+    }
+  }
+
+  .models-name {
+    font-size: 0.88rem;
+    color: $color-text-secondary;
+    margin-bottom: 1.25rem;
+
+    strong {
+      color: $color-text-primary;
+    }
+  }
+
+  .cat-specs-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+
+    .spec-chip {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: #F1F5F9;
+      border: 1px solid #E2E8F0;
+      padding: 0.35rem 0.7rem;
+      border-radius: $radius-sm;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: $color-text-secondary;
+    }
+  }
+
+  .cat-features-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+    margin-bottom: 2rem;
+    flex: 1;
+
+    li {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.88rem;
+      color: $color-text-secondary;
+    }
+  }
+
+  .cat-card-actions {
+    margin-top: auto;
+
+    .w-full {
+      width: 100%;
+    }
+  }
+}

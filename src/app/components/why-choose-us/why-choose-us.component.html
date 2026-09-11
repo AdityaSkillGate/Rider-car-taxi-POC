@@ -1,0 +1,26 @@
+<section class="section why-us-section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-badge">{{ i18n.t('why.badge') }}</span>
+      <h2 class="section-title">
+        {{ i18n.t('why.title') }} <span class="highlight-yellow">{{ i18n.t('why.titleHighlight') }}</span>
+      </h2>
+      <p class="section-subtitle">
+        {{ i18n.t('why.sub') }}
+      </p>
+    </div>
+
+    <div class="why-us-grid">
+      @for (item of features; track item.titleKey) {
+        <div class="why-card glass-card">
+          <div class="why-top">
+            <div class="why-icon-box">{{ item.icon }}</div>
+            <span class="why-badge">{{ i18n.t(item.badgeKey) }}</span>
+          </div>
+          <h3 class="why-card-title">{{ i18n.t(item.titleKey) }}</h3>
+          <p class="why-card-desc">{{ i18n.t(item.descKey) }}</p>
+        </div>
+      }
+    </div>
+  </div>
+</section>

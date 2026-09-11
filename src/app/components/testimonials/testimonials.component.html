@@ -1,0 +1,64 @@
+<section class="section testimonials-section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-badge">{{ i18n.t('reviews.badge') }}</span>
+      <h2 class="section-title">
+        {{ i18n.t('reviews.title') }} <span class="highlight-yellow">{{ i18n.t('reviews.titleHighlight') }}</span>
+      </h2>
+      <p class="section-subtitle">
+        {{ i18n.t('reviews.sub') }}
+      </p>
+    </div>
+
+    <!-- Testimonials Slider Container -->
+    <div class="testimonials-slider">
+      <div class="reviews-track" [style.transform]="'translateX(-' + (currentIndex() * 100) + '%)'">
+        @for (item of taxiData.testimonials; track item.id) {
+          <div class="review-slide">
+            <div class="review-card glass-card">
+              <div class="review-top">
+                <div class="stars-row">
+                  @for (star of [1,2,3,4,5]; track star) {
+                    <span class="star-icon">⭐</span>
+                  }
+                </div>
+                <span class="trip-tag">{{ i18n.isTamil() && item.tripTypeTa ? item.tripTypeTa : item.tripType }}</span>
+              </div>
+
+              <p class="review-comment">“{{ i18n.isTamil() && item.commentTa ? item.commentTa : item.comment }}”</p>
+
+              <div class="reviewer-meta">
+                <div class="reviewer-avatar">{{ item.avatar }}</div>
+                <div class="reviewer-info">
+                  <h4 class="reviewer-name">{{ i18n.isTamil() && item.nameTa ? item.nameTa : item.name }}</h4>
+                  <p class="reviewer-loc">{{ i18n.isTamil() && item.locationTa ? item.locationTa : item.location }} • {{ i18n.isTamil() && item.dateTa ? item.dateTa : item.date }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+
+      <!-- Navigation Arrows & Dots -->
+      <div class="slider-controls">
+        <button class="slider-btn prev-btn" (click)="prev()" aria-label="Previous review">
+          <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2.5" fill="none">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+
+        <div class="slider-dots">
+          @for (item of taxiData.testimonials; track item.id; let i = $index) {
+            <button class="dot-btn" [class.active]="currentIndex() === i" (click)="setIndex(i)" aria-label="Go to slide"></button>
+          }
+        </div>
+
+        <button class="slider-btn next-btn" (click)="next()" aria-label="Next review">
+          <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2.5" fill="none">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>

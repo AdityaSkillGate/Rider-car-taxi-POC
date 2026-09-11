@@ -1,0 +1,123 @@
+<section class="section service-map-section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-badge">{{ i18n.t('map.badge') }}</span>
+      <h2 class="section-title">
+        {{ i18n.t('map.title') }} <span class="highlight-yellow">{{ i18n.t('map.titleHighlight') }}</span>
+      </h2>
+      <p class="section-subtitle">
+        {{ i18n.t('map.sub') }}
+      </p>
+    </div>
+
+    <div class="map-interactive-grid">
+      <!-- Interactive SVG Vector Map -->
+      <div class="map-svg-card glass-card">
+        <div class="map-wrapper">
+          <svg viewBox="0 0 100 100" class="tn-map-svg">
+            <!-- Stylized Tamil Nadu Boundary Shape -->
+            <path class="tn-boundary" d="
+              M 70 8 
+              C 85 15, 88 28, 85 38 
+              C 82 48, 78 58, 68 70 
+              C 60 78, 55 88, 48 94 
+              C 42 97, 36 94, 32 88 
+              C 28 80, 24 72, 28 60 
+              C 32 50, 26 42, 30 32 
+              C 34 22, 45 16, 55 12 
+              Z" />
+
+            <!-- Animated Route Lines Connecting to Sankarankovil HQ (38, 78) -->
+            @for (city of taxiData.citiesCoverage; track city.id) {
+              @if (!city.isHQ) {
+                <line class="connection-line" 
+                      [class.active-line]="selectedCityId() === city.id"
+                      x1="38" y1="78" 
+                      [attr.x2]="city.coordinates.x" 
+                      [attr.y2]="city.coordinates.y" />
+              }
+            }
+
+            <!-- City Interactive Pins -->
+            @for (city of taxiData.citiesCoverage; track city.id) {
+              <g class="city-pin-group" 
+                 [class.active-pin]="selectedCityId() === city.id"
+                 [class.hq-pin]="city.isHQ"
+                 (click)="selectCity(city.id)">
+                <!-- Pulse circle -->
+                <circle [attr.cx]="city.coordinates.x" [attr.cy]="city.coordinates.y" r="2.8" class="pin-pulse" />
+                <!-- Core Dot -->
+                <circle [attr.cx]="city.coordinates.x" [attr.cy]="city.coordinates.y" r="1.6" class="pin-dot" />
+                
+                <!-- City Label -->
+                <text [attr.x]="city.coordinates.x + 3.2" 
+                      [attr.y]="city.coordinates.y + 1.2" 
+                      class="pin-label">
+                  {{ city.name }}
+                </text>
+              </g>
+            }
+          </svg>
+
+          <div class="map-legend">
+            <div class="legend-item">
+              <span class="legend-hq-dot"></span>
+              <span>{{ i18n.t('map.mainHQ') }}</span>
+            </div>
+            <div class="legend-item">
+              <span class="legend-cluster-dot"></span>
+              <span>{{ i18n.t('map.cityCluster') }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- City Details & Dispatch Status Panel -->
+      <div class="city-status-panel glass-card">
+        <div class="panel-header">
+          <div class="panel-tag">
+            <span>{{ selectedCity.isHQ ? ('⭐ ' + i18n.t('map.mainHQ')) : ('📍 ' + i18n.t('map.cityCluster')) }}</span>
+          </div>
+          <h3 class="city-name">{{ selectedCity.name }}</h3>
+          <p class="city-district">{{ selectedCity.district }} • {{ selectedCity.tagline }}</p>
+        </div>
+
+        <div class="city-metrics-row">
+          <div class="city-metric">
+            <span class="m-val">{{ selectedCity.responseMinutes }} {{ i18n.isTamil() ? 'நிமிடம்' : 'Mins' }}</span>
+            <span class="m-lbl">{{ i18n.t('map.avgPickup') }}</span>
+          </div>
+          <div class="city-metric">
+            <span class="m-val">{{ selectedCity.availableCabs }}+</span>
+            <span class="m-lbl">{{ i18n.t('map.standbyCabs') }}</span>
+          </div>
+          <div class="city-metric">
+            <span class="m-val">24/7</span>
+            <span class="m-lbl">{{ i18n.t('map.deskSupport') }}</span>
+          </div>
+        </div>
+
+        <div class="city-top-routes">
+          <h5>{{ i18n.t('map.popularFrom') }} {{ selectedCity.name }}</h5>
+          <div class="route-pills-list">
+            @for (r of selectedCity.topRoutes; track r) {
+              <span class="city-route-tag">🚕 {{ r }}</span>
+            }
+          </div>
+        </div>
+
+        <div class="dispatch-guarantee-box">
+          <div class="guarantee-icon">🛡️</div>
+          <div class="guarantee-text">
+            <strong>{{ i18n.t('map.guaranteeTitle') }}</strong>
+            <p>{{ i18n.t('map.guaranteeDesc') }} ({{ selectedCity.responseMinutes }} {{ i18n.isTamil() ? 'நிமிடங்களில் வருகை' : 'Mins Arrival' }}).</p>
+          </div>
+        </div>
+
+        <button (click)="bookFromCity(selectedCity)" class="btn btn-whatsapp btn-lg w-full">
+          <span>{{ i18n.t('map.bookCityBtn') }} {{ selectedCity.name }}</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>

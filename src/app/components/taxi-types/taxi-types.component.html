@@ -1,0 +1,71 @@
+<section class="section taxi-types-section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-badge">{{ i18n.t('types.badge') }}</span>
+      <h2 class="section-title">
+        {{ i18n.t('types.title') }} <span class="highlight-yellow">{{ i18n.t('types.titleHighlight') }}</span>
+      </h2>
+      <p class="section-subtitle">
+        {{ i18n.t('types.sub') }}
+      </p>
+    </div>
+
+    <div class="taxi-types-grid">
+      @for (cat of taxiData.vehicleCategories; track cat.id) {
+        <div class="category-card glass-card">
+          @if (cat.badge) {
+            <span class="category-badge">{{ cat.badge }}</span>
+          }
+
+          <div class="cat-header">
+            <h3 class="cat-title">{{ cat.name }}</h3>
+            <p class="cat-tagline">{{ cat.tagline }}</p>
+          </div>
+
+          <!-- Price Tag -->
+          <div class="cat-price-box">
+            <span class="price-val">₹{{ cat.ratePerKm }}</span>
+            <span class="price-unit">/ KM</span>
+          </div>
+
+          <div class="models-name">
+            <strong>{{ i18n.isTamil() ? 'வாகனங்கள்:' : 'Popular Models:' }}</strong> {{ cat.models }}
+          </div>
+
+          <!-- Key Specs -->
+          <div class="cat-specs-row">
+            <div class="spec-chip">
+              <span class="spec-icon">👥</span>
+              <span>{{ cat.capacity }}</span>
+            </div>
+            <div class="spec-chip">
+              <span class="spec-icon">🧳</span>
+              <span>{{ cat.luggage }}</span>
+            </div>
+            <div class="spec-chip">
+              <span class="spec-icon">❄️</span>
+              <span>{{ i18n.isTamil() ? 'ஏசி வசதி' : 'AC Cabin' }}</span>
+            </div>
+          </div>
+
+          <ul class="cat-features-list">
+            @for (feat of cat.features; track feat) {
+              <li>
+                <svg viewBox="0 0 24 24" width="16" height="16" stroke="#10B981" stroke-width="3" fill="none">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+                <span>{{ feat }}</span>
+              </li>
+            }
+          </ul>
+
+          <div class="cat-card-actions">
+            <button (click)="bookCategory(cat)" class="btn btn-whatsapp w-full">
+              <span>{{ i18n.t('types.bookBtn') }} {{ cat.name }}</span>
+            </button>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>

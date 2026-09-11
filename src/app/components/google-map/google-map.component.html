@@ -1,0 +1,53 @@
+<section class="section google-map-section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-badge">{{ i18n.t('mapSection.badge') }}</span>
+      <h2 class="section-title">
+        {{ i18n.t('mapSection.title') }} <span class="highlight-yellow">{{ i18n.t('mapSection.titleHighlight') }}</span>
+      </h2>
+      <p class="section-subtitle">
+        {{ i18n.t('mapSection.sub') }}
+      </p>
+    </div>
+
+    <div class="map-container-card glass-card">
+      <div class="map-iframe-wrapper">
+        <!-- <iframe 
+          title="Rider Call Taxi Sankarankovil Location"
+          src="https://maps.google.com/maps?q=MPM%20Complex%20Rajapalayam%20Main%20Road%20Sankarankovil&t=&z=15&ie=UTF8&iwloc=&output=embed" 
+          width="100%" 
+          height="100%" 
+          style="border:0;" 
+          allowfullscreen="" 
+          loading="lazy">
+        </iframe> -->
+        <!-- <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d67783.99091936351!2d77.49686219081796!3d9.152551823821751!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b06970005fa718f%3A0xa8e66d45c2e505b8!2sRider%20Call%20Taxi!5e1!3m2!1sen!2sca!4v1789101471059!5m2!1sen!2sca" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe> -->
+         <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d67783.99091936351!2d77.49686219081796!3d9.152551823821751!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b06970005fa718f%3A0xa8e66d45c2e505b8!2sRider%20Call%20Taxi!5e1!3m2!1sen!2sca!4v1789101471059!5m2!1sen!2sca" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+      </div>
+
+      <div class="location-details-bar">
+        <div class="loc-col">
+          <span class="loc-label">🏢 {{ i18n.t('mapSection.addressLabel') }}</span>
+          <p class="loc-val">{{ taxiData.company.addressLine }}, {{ taxiData.company.city }} – {{ taxiData.company.pincode }}.</p>
+        </div>
+
+        <div class="loc-col">
+          <span class="loc-label">📞 {{ i18n.t('mapSection.hotlinesLabel') }}</span>
+          <p class="loc-val">
+            <a [href]="'tel:' + taxiData.company.phone1">{{ taxiData.company.phone1 }}</a> / 
+            <a [href]="'tel:' + taxiData.company.phone2">{{ taxiData.company.phone2 }}</a>
+          </p>
+        </div>
+
+        <div class="loc-col action-col">
+          <button (click)="openDirections()" class="btn btn-secondary">
+            <span>{{ i18n.t('mapSection.directionsBtn') }}</span>
+            <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2.5" fill="none">
+              <polygon points="3 11 22 2 13 21 11 13 3 11"></polygon>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

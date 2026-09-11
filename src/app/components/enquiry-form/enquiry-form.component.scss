@@ -1,0 +1,201 @@
+@use '../../../styles/variables' as *;
+@use '../../../styles/responsive' as *;
+
+.enquiry-section {
+  position: relative;
+}
+
+.enquiry-card-wrapper {
+  padding: 0;
+  overflow: hidden;
+  border-radius: $radius-xl;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 20px 50px rgba(15, 23, 42, 0.1);
+}
+
+.enquiry-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+
+  @include screen-lg {
+    grid-template-columns: 1fr 1.3fr;
+  }
+}
+
+// Left Pane
+.enquiry-info-pane {
+  background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+  color: #FFFFFF;
+  padding: 3.5rem 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  @include mobile {
+    padding: 2.2rem 1.75rem;
+  }
+
+  .enquiry-badge {
+    display: inline-block;
+    background: rgba(255, 193, 7, 0.2);
+    border: 1px solid rgba(255, 193, 7, 0.4);
+    color: #FFC107;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    padding: 0.25rem 0.65rem;
+    border-radius: $radius-full;
+    margin-bottom: 1rem;
+    width: fit-content;
+  }
+
+  .pane-title {
+    font-size: 2.2rem;
+    color: #FFFFFF;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+
+  .pane-desc {
+    font-size: 0.95rem;
+    line-height: 1.65;
+    color: #94A3B8;
+    margin-bottom: 2.5rem;
+  }
+
+  .perks-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+
+    .perk-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+
+      .perk-icon {
+        font-size: 1.4rem;
+        line-height: 1.2;
+      }
+
+      strong {
+        font-size: 0.95rem;
+        color: #FFFFFF;
+        display: block;
+        margin-bottom: 0.15rem;
+      }
+
+      p {
+        font-size: 0.82rem;
+        color: #94A3B8;
+        line-height: 1.4;
+
+        a {
+          color: #FFC107;
+          font-weight: 700;
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}
+
+// Right Form Pane
+.enquiry-form-pane {
+  padding: 3.5rem 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  @include mobile {
+    padding: 2.2rem 1.75rem;
+  }
+
+  .booking-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+
+    @include screen-sm {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+
+    label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: $color-text-secondary;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      font-size: 0.9rem;
+      border: 1.5px solid #CBD5E1;
+      border-radius: $radius-md;
+      background: #FFFFFF;
+      outline: none;
+      transition: border-color 0.2s;
+
+      &:focus {
+        border-color: $color-primary;
+        box-shadow: 0 0 0 3px rgba(255, 193, 7, 0.2);
+      }
+
+      &.is-invalid {
+        border-color: $color-secondary;
+      }
+    }
+
+    .error-msg {
+      font-size: 0.72rem;
+      color: $color-secondary;
+      font-weight: 600;
+    }
+  }
+
+  .submit-booking-btn {
+    margin-top: 0.5rem;
+    padding: 1rem;
+  }
+
+  .w-full {
+    width: 100%;
+  }
+
+  // Success State
+  .success-state-box {
+    text-align: center;
+    padding: 2rem 1rem;
+
+    .success-icon {
+      font-size: 3.5rem;
+      margin-bottom: 1rem;
+    }
+
+    h3 {
+      font-size: 1.8rem;
+      color: $color-text-primary;
+      margin-bottom: 0.75rem;
+    }
+
+    p {
+      font-size: 1rem;
+      color: $color-text-secondary;
+      max-width: 480px;
+      margin: 0 auto 2rem auto;
+      line-height: 1.6;
+    }
+  }
+}

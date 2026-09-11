@@ -1,0 +1,271 @@
+@use '../../../styles/variables' as *;
+@use '../../../styles/responsive' as *;
+
+.service-map-section {
+  position: relative;
+}
+
+.map-interactive-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+
+  @include screen-lg {
+    grid-template-columns: 1.25fr 1fr;
+    align-items: center;
+  }
+}
+
+// Map Card
+.map-svg-card {
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.9);
+
+  .map-wrapper {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    max-height: 520px;
+    margin: 0 auto;
+  }
+
+  .tn-map-svg {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 8px 24px rgba(15, 23, 42, 0.08));
+
+    .tn-boundary {
+      fill: rgba(255, 193, 7, 0.08);
+      stroke: rgba(255, 193, 7, 0.5);
+      stroke-width: 0.8;
+      stroke-dasharray: 2 1;
+    }
+
+    .connection-line {
+      stroke: rgba(148, 163, 184, 0.4);
+      stroke-width: 0.5;
+      stroke-dasharray: 1 1;
+      transition: all 0.3s ease;
+
+      &.active-line {
+        stroke: $color-secondary;
+        stroke-width: 1.2;
+        stroke-dasharray: 2 2;
+        animation: dashFlow 1.5s linear infinite;
+      }
+    }
+
+    .city-pin-group {
+      cursor: pointer;
+      transition: transform 0.2s ease;
+
+      .pin-pulse {
+        fill: rgba(255, 193, 7, 0.35);
+        animation: beaconPing 2s infinite ease-in-out;
+      }
+
+      .pin-dot {
+        fill: $color-primary-dark;
+        stroke: #FFFFFF;
+        stroke-width: 0.4;
+      }
+
+      .pin-label {
+        font-size: 2.4px;
+        font-weight: 700;
+        fill: $color-text-primary;
+        pointer-events: none;
+      }
+
+      &:hover, &.active-pin {
+        .pin-dot {
+          fill: $color-secondary;
+        }
+
+        .pin-label {
+          fill: $color-secondary;
+          font-weight: 900;
+        }
+      }
+
+      &.hq-pin {
+        .pin-dot {
+          fill: $color-secondary;
+          stroke: #FFC107;
+          stroke-width: 0.6;
+        }
+
+        .pin-label {
+          fill: $color-secondary;
+          font-weight: 900;
+        }
+      }
+    }
+  }
+
+  .map-legend {
+    position: absolute;
+    bottom: 0.5rem;
+    left: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(8px);
+    padding: 0.5rem 0.85rem;
+    border-radius: $radius-md;
+    border: 1px solid #E2E8F0;
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: $color-text-secondary;
+
+      .legend-hq-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: $color-secondary;
+        border: 2px solid #FFC107;
+      }
+
+      .legend-cluster-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: $color-primary;
+      }
+    }
+  }
+}
+
+// City Details Panel
+.city-status-panel {
+  padding: 2.5rem;
+  background: rgba(255, 255, 255, 0.88);
+  display: flex;
+  flex-direction: column;
+
+  @include mobile {
+    padding: 1.75rem;
+  }
+
+  .panel-header {
+    margin-bottom: 1.5rem;
+
+    .panel-tag {
+      display: inline-block;
+      background: rgba(211, 47, 47, 0.1);
+      color: $color-secondary;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      padding: 0.25rem 0.65rem;
+      border-radius: $radius-full;
+      margin-bottom: 0.5rem;
+    }
+
+    .city-name {
+      font-size: 2rem;
+      color: $color-text-primary;
+    }
+
+    .city-district {
+      font-size: 0.9rem;
+      color: $color-text-secondary;
+    }
+  }
+
+  .city-metrics-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+    margin-bottom: 1.75rem;
+
+    .city-metric {
+      display: flex;
+      flex-direction: column;
+      padding: 0.85rem;
+      background: #F8FAFC;
+      border: 1px solid #E2E8F0;
+      border-radius: $radius-md;
+      text-align: center;
+
+      .m-val {
+        font-family: $font-heading;
+        font-size: 1.25rem;
+        font-weight: 800;
+        color: $color-secondary;
+      }
+
+      .m-lbl {
+        font-size: 0.72rem;
+        color: $color-text-muted;
+      }
+    }
+  }
+
+  .city-top-routes {
+    margin-bottom: 1.75rem;
+
+    h5 {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: $color-text-secondary;
+      margin-bottom: 0.65rem;
+    }
+
+    .route-pills-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+
+      .city-route-tag {
+        font-size: 0.82rem;
+        background: rgba(255, 193, 7, 0.15);
+        color: #9A6200;
+        padding: 0.35rem 0.75rem;
+        border-radius: $radius-full;
+        font-weight: 600;
+      }
+    }
+  }
+
+  .dispatch-guarantee-box {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.85rem;
+    padding: 1rem 1.25rem;
+    background: #F0FDF4;
+    border: 1px solid #BBF7D0;
+    border-radius: $radius-md;
+    margin-bottom: 2rem;
+
+    .guarantee-icon {
+      font-size: 1.4rem;
+    }
+
+    .guarantee-text {
+      strong {
+        font-size: 0.88rem;
+        color: #166534;
+        display: block;
+        margin-bottom: 0.15rem;
+      }
+
+      p {
+        font-size: 0.78rem;
+        color: #15803D;
+        line-height: 1.4;
+      }
+    }
+  }
+
+  .w-full {
+    width: 100%;
+  }
+}

@@ -1,0 +1,102 @@
+<section class="section route-showcase-section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-badge">{{ i18n.t('routes.badge') }}</span>
+      <h2 class="section-title">
+        {{ i18n.t('routes.title') }} <span class="highlight-yellow">{{ i18n.t('routes.titleHighlight') }}</span>
+      </h2>
+      <p class="section-subtitle">
+        {{ i18n.t('routes.sub') }}
+      </p>
+    </div>
+
+    <!-- Route Selector Pills -->
+    <div class="routes-tab-bar">
+      @for (route of taxiData.smartRoutes; track route.id) {
+        <button class="route-tab-pill" 
+                [class.active]="activeRouteId() === route.id" 
+                (click)="selectRoute(route.id)">
+          <span class="route-names">{{ route.from }} → {{ route.to }}</span>
+          <span class="route-km">({{ route.distanceKm }} KM)</span>
+        </button>
+      }
+    </div>
+
+    <!-- Featured Route Interactive Display Card -->
+    <div class="active-route-card glass-card">
+      <div class="route-card-top">
+        <div class="route-title-block">
+          <div class="route-badge-row">
+            <span class="highway-pill">🛣️ {{ activeRoute.highway }}</span>
+            @if (activeRoute.popular) {
+              <span class="hot-badge">🔥 {{ i18n.isTamil() ? 'அதிக முன்பதிவு' : 'High Demand' }}</span>
+            }
+          </div>
+          <h3>{{ activeRoute.from }} <span class="arrow">⇄</span> {{ activeRoute.to }}</h3>
+          <p class="route-desc">{{ activeRoute.highlight }}</p>
+        </div>
+
+        <div class="route-pricing-box">
+          <span class="starting-label">{{ i18n.t('routes.startingFrom') }}</span>
+          <div class="price-val">₹{{ activeRoute.startingPrice }}</div>
+          <span class="rate-per-km">{{ i18n.t('routes.standardRate') }}</span>
+        </div>
+      </div>
+
+      <!-- Animated Road Path Graphic -->
+      <div class="animated-route-highway">
+        <div class="highway-node start-node">
+          <div class="node-circle">📍</div>
+          <div class="node-text">
+            <strong>{{ activeRoute.from }}</strong>
+            <span>{{ i18n.t('routes.pickupHub') }}</span>
+          </div>
+        </div>
+
+        <!-- Animated SVG Road with moving Taxi -->
+        <div class="road-path-svg-box">
+          <svg class="road-svg" viewBox="0 0 500 60" preserveAspectRatio="none">
+            <!-- Road Asphalt -->
+            <path d="M 10 30 Q 250 10, 490 30" stroke="#334155" stroke-width="12" fill="none" stroke-linecap="round" />
+            <!-- Animated Center Yellow Dashes -->
+            <path class="animated-dash" d="M 10 30 Q 250 10, 490 30" stroke="#FFC107" stroke-width="3" stroke-dasharray="12 12" fill="none" />
+          </svg>
+
+          <!-- Moving 3D/CSS Taxi on path -->
+          <div class="moving-taxi-indicator">
+            <div class="taxi-vehicle-glyph">🚕</div>
+            <span class="moving-eta">{{ activeRoute.estimatedDuration }}</span>
+          </div>
+        </div>
+
+        <div class="highway-node end-node">
+          <div class="node-circle">🏁</div>
+          <div class="node-text">
+            <strong>{{ activeRoute.to }}</strong>
+            <span>{{ i18n.t('routes.destination') }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Key Intermediate Stops & Action -->
+      <div class="route-stops-footer">
+        <div class="key-stops-row">
+          <span class="stops-label">{{ i18n.t('routes.enRoute') }}</span>
+          <div class="stops-pills">
+            @for (stop of activeRoute.keyStops; track stop) {
+              <span class="stop-tag">📌 {{ stop }}</span>
+            }
+          </div>
+        </div>
+
+        <button (click)="bookRoute(activeRoute)" class="btn btn-primary btn-lg">
+          <span>{{ i18n.t('routes.bookRouteBtn') }}</span>
+          <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2.5" fill="none">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,58 @@
+<div class="services-page">
+  <!-- Services Header -->
+  <section class="services-hero">
+    <div class="container">
+      <div class="services-hero-content">
+        <span class="section-badge">{{ i18n.isTamil() ? 'நவீன போக்குவரத்து சேவைகள்' : 'PREMIUM TRANSPORT SOLUTIONS' }}</span>
+        <h1>{{ i18n.isTamil() ? 'தமிழ்நாடு முழுவதும் விரிவான' : 'Comprehensive Taxi Services in' }} <span class="highlight-yellow">{{ i18n.isTamil() ? 'டாக்ஸி சேவைகள்' : 'Tamil Nadu' }}</span></h1>
+        <p class="services-hero-sub">
+          {{ i18n.isTamil() 
+            ? 'உள்ளூர் பயணம், ஏர்போர்ட் டிராப் முதல் சொகுசு திருமண வாகனங்கள் மற்றும் தென் தமிழக ஆன்மீக கோவில் சுற்றுலாக்கள் வரை அனைத்தும் சிறந்த தரத்தில்.' 
+            : 'From quick local grocery and railway station pickups to luxury wedding convoys and holy temple pilgrimage packages across South India.' }}
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Grid -->
+  <section class="section services-grid-section">
+    <div class="container">
+      <div class="services-master-grid">
+        @for (s of taxiData.services; track s.id) {
+          <div class="service-master-card glass-card">
+            <div class="s-top">
+              <div class="s-badge-row">
+                <span class="s-category-badge">{{ s.badge || (i18n.isTamil() ? '24/7 தயார் நிலை' : 'Available 24/7') }}</span>
+                @if (s.popular) {
+                  <span class="s-popular-tag">⭐ {{ i18n.isTamil() ? 'அதிக தேவை' : 'High Demand' }}</span>
+                }
+              </div>
+              <h3 class="s-title">{{ s.title }}</h3>
+              <p class="s-subtitle">{{ s.subtitle }}</p>
+            </div>
+
+            <p class="s-description">{{ s.description }}</p>
+
+            <div class="s-features-box">
+              <h5>{{ i18n.isTamil() ? 'இச்சேவையில் அடங்கிய வசதிகள்' : 'Included In This Service' }}</h5>
+              <ul>
+                @for (feat of s.features; track feat) {
+                  <li>
+                    <span class="check-mark">✓</span>
+                    <span>{{ feat }}</span>
+                  </li>
+                }
+              </ul>
+            </div>
+
+            <div class="s-card-actions">
+              <button (click)="bookService(s)" class="btn btn-whatsapp w-full">
+                <span>{{ i18n.isTamil() ? 'வாட்ஸ்அப்பில் முன்பதிவு' : 'Book ' + s.title }}</span>
+              </button>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+</div>

@@ -1,0 +1,62 @@
+<div class="fleet-page">
+  <!-- Fleet Hero -->
+  <section class="fleet-hero">
+    <div class="container">
+      <div class="fleet-hero-content">
+        <span class="section-badge">{{ i18n.isTamil() ? 'நவீன வாகன அரங்கம்' : 'MODERN FLEET SHOWROOM' }}</span>
+        <h1>{{ i18n.isTamil() ? 'சுத்தமான, சுகமான ஏசி கார்கள்' : 'Clean, Sanitized Cabs' }} <span class="highlight-yellow">{{ i18n.isTamil() ? 'எப்போதும் தயார்' : 'Ready for Any Journey' }}</span></h1>
+        <p class="fleet-hero-sub">
+          {{ i18n.isTamil() 
+            ? 'எங்கள் அனைத்து வாகனங்களும் GPS பொருத்தப்பட்டு, காப்பீடு செய்யப்பட்டு, உயர்தர தூய்மையுடன் பராமரிக்கப்படுகின்றன.' 
+            : 'Every car in our fleet is GPS tracked, insured, rigorously serviced, and maintained to the highest hygiene standards.' }}
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3D Fleet Showcase Component -->
+  <app-fleet-showcase></app-fleet-showcase>
+
+  <!-- Side-by-Side Comparison Table -->
+  <section class="section comparison-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-badge">{{ i18n.isTamil() ? 'வாகன ஒப்பீடு' : 'SPECS COMPARISON' }}</span>
+        <h2 class="section-title">{{ i18n.isTamil() ? 'வாகன விவரக் குறிப்பு அட்டவணை' : 'Vehicle Comparison Matrix' }}</h2>
+        <p class="section-subtitle">{{ i18n.isTamil() ? 'உங்கள் பயணிகளின் எண்ணிக்கை மற்றும் லக்கேஜிற்கு ஏற்ற சரியான வாகனத்தை தேர்வு செய்க.' : 'Find the exact vehicle matching your passenger count and luggage needs.' }}</p>
+      </div>
+
+      <div class="table-responsive-wrapper glass-card">
+        <table class="fleet-table">
+          <thead>
+            <tr>
+              <th>{{ i18n.isTamil() ? 'வாகன வகை' : 'Vehicle Class' }}</th>
+              <th>{{ i18n.isTamil() ? 'மாடல்கள்' : 'Models' }}</th>
+              <th>{{ i18n.isTamil() ? 'கட்டணம் / கி.மீ' : 'Rate / KM' }}</th>
+              <th>{{ i18n.isTamil() ? 'இருக்கைகள்' : 'Seating' }}</th>
+              <th>{{ i18n.isTamil() ? 'லக்கேஜ்' : 'Luggage' }}</th>
+              <th>{{ i18n.isTamil() ? 'ஏசி வசதி' : 'AC Type' }}</th>
+              <th>{{ i18n.isTamil() ? 'பயன்பாடு' : 'Best Used For' }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (v of taxiData.vehicleCategories; track v.id) {
+              <tr>
+                <td class="vehicle-col">
+                  <strong>{{ v.name }}</strong>
+                  <span class="v-badge">{{ v.badge }}</span>
+                </td>
+                <td>{{ v.models }}</td>
+                <td class="rate-col">₹{{ v.ratePerKm }}/KM</td>
+                <td>{{ v.capacity }}</td>
+                <td>{{ v.luggage }}</td>
+                <td><span class="ac-badge">{{ i18n.isTamil() ? 'முழு ஏசி' : 'Dual Zone AC' }}</span></td>
+                <td>{{ v.tagline }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</div>

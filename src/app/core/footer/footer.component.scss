@@ -1,0 +1,247 @@
+@use '../../../styles/variables' as *;
+@use '../../../styles/responsive' as *;
+
+.footer-wrapper {
+  background: #0F172A;
+  color: #F8FAFC;
+  position: relative;
+  overflow: hidden;
+  padding-top: 2rem;
+}
+
+// CTA Banner
+.footer-cta-banner {
+  background: linear-gradient(135deg, rgba(255, 193, 7, 0.12) 0%, rgba(211, 47, 47, 0.12) 100%);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 3.5rem 0;
+
+  .cta-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    text-align: center;
+
+    @include screen-lg {
+      flex-direction: row;
+      text-align: left;
+    }
+
+    .cta-badge {
+      display: inline-block;
+      background: rgba(255, 193, 7, 0.2);
+      border: 1px solid rgba(255, 193, 7, 0.4);
+      color: #FFC107;
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      padding: 0.25rem 0.75rem;
+      border-radius: $radius-full;
+      margin-bottom: 0.75rem;
+    }
+
+    h3 {
+      color: #FFFFFF;
+      font-size: 1.85rem;
+      margin-bottom: 0.5rem;
+    }
+
+    p {
+      color: #94A3B8;
+      font-size: 1.05rem;
+    }
+
+    .cta-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+    }
+  }
+}
+
+// Main Footer Grid
+.footer-main {
+  padding: 4.5rem 1.5rem 2rem 1.5rem;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+
+  @include screen-md {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include screen-lg {
+    grid-template-columns: 1.6fr 1fr 1fr 1.4fr;
+  }
+}
+
+.footer-col {
+  .col-title {
+    color: #FFFFFF;
+    font-size: 1.15rem;
+    margin-bottom: 1.5rem;
+    position: relative;
+    padding-bottom: 0.75rem;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 36px;
+      height: 2.5px;
+      background: $color-primary;
+      border-radius: 2px;
+    }
+  }
+}
+
+.brand-col {
+  .footer-brand-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+
+    .footer-logo-img {
+      width: 52px;
+      height: 52px;
+      object-fit: contain;
+      border-radius: 50%;
+      background: #FFFFFF;
+      padding: 2px;
+      box-shadow: 0 0 16px rgba(255, 193, 7, 0.4);
+    }
+
+    .footer-brand-title {
+      font-family: $font-heading;
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: #FFFFFF;
+
+      .highlight {
+        color: #FFC107;
+      }
+    }
+
+    .footer-brand-tagline {
+      font-size: 0.8rem;
+      color: #94A3B8;
+    }
+  }
+
+  .brand-desc {
+    color: #94A3B8;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+  }
+
+  .brand-stats-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+
+    .pill {
+      font-size: 0.78rem;
+      font-weight: 600;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      padding: 0.35rem 0.75rem;
+      border-radius: $radius-full;
+      color: #E2E8F0;
+    }
+  }
+}
+
+.footer-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+
+  li a {
+    color: #94A3B8;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+    display: inline-block;
+
+    &:hover {
+      color: #FFC107;
+      transform: translateX(4px);
+    }
+  }
+}
+
+.contact-col {
+  .contact-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.85rem;
+    margin-bottom: 1.25rem;
+
+    .contact-icon {
+      font-size: 1.2rem;
+      line-height: 1.4;
+    }
+
+    .contact-text {
+      color: #94A3B8;
+      font-size: 0.92rem;
+      line-height: 1.6;
+
+      strong {
+        color: #FFFFFF;
+      }
+
+      a {
+        color: #FFC107;
+        font-weight: 600;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}
+
+.footer-bottom {
+  margin-top: 4rem;
+  padding-top: 1.75rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  text-align: center;
+
+  @include screen-md {
+    flex-direction: row;
+    text-align: left;
+  }
+
+  .copyright-text {
+    font-size: 0.88rem;
+    color: #64748B;
+
+    strong {
+      color: #E2E8F0;
+    }
+  }
+
+  .footer-bottom-links {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.82rem;
+    color: #94A3B8;
+  }
+}

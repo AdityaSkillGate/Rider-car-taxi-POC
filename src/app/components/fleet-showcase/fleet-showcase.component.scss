@@ -1,0 +1,979 @@
+@use '../../../styles/variables' as *;
+@use '../../../styles/responsive' as *;
+
+.fleet-showcase-section {
+  position: relative;
+}
+
+// Category Tabs
+.fleet-category-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-bottom: 2.5rem;
+
+  .cat-tab-btn {
+    padding: 0.65rem 1.25rem;
+    font-size: 0.9rem;
+    font-weight: 700;
+    border-radius: $radius-full;
+    background: rgba(255, 255, 255, 0.85);
+    border: 1.5px solid #E2E8F0;
+    color: $color-text-secondary;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    cursor: pointer;
+
+    &:hover {
+      border-color: $color-primary;
+      color: $color-text-primary;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(255, 193, 7, 0.2);
+    }
+
+    &.active {
+      background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+      color: #FFC107;
+      border-color: #FFC107;
+      box-shadow: 0 6px 20px rgba(15, 23, 42, 0.25);
+      transform: translateY(-2px);
+    }
+  }
+}
+
+// Studio Grid
+.fleet-studio-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+
+  @include screen-lg {
+    grid-template-columns: 1.35fr 1fr;
+    align-items: stretch;
+  }
+}
+
+// 3D Canvas / Original Car Showroom Card
+.fleet-canvas-card {
+  padding: 0;
+  overflow: hidden;
+  position: relative;
+  background: radial-gradient(circle at 50% 25%, #182234 0%, #0A0E17 80%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: $radius-xl;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 20px 45px rgba(10, 14, 23, 0.4);
+
+  // Top Bar inside Dark Studio
+  .showroom-top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    padding: 1.25rem 1.5rem;
+    background: rgba(15, 23, 42, 0.7);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    z-index: 10;
+
+    .view-mode-tabs {
+      display: flex;
+      background: rgba(0, 0, 0, 0.35);
+      padding: 0.3rem;
+      border-radius: $radius-full;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+
+      .mode-tab-btn {
+        background: transparent;
+        border: none;
+        color: #94A3B8;
+        font-size: 0.82rem;
+        font-weight: 700;
+        padding: 0.45rem 1rem;
+        border-radius: $radius-full;
+        cursor: pointer;
+        transition: all 0.2s ease;
+
+        &:hover {
+          color: #F8FAFC;
+        }
+
+        &.active {
+          background: #FFC107;
+          color: #0F172A;
+          box-shadow: 0 2px 8px rgba(255, 193, 7, 0.4);
+        }
+
+        &--video {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.4rem;
+
+          .video-pulse-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #EF4444;
+            box-shadow: 0 0 8px #EF4444;
+            animation: recPulse 1.5s infinite ease-in-out;
+          }
+
+          &.active {
+            background: linear-gradient(135deg, #EF4444 0%, #B91C1C 100%);
+            color: #FFFFFF;
+            box-shadow: 0 2px 12px rgba(239, 68, 68, 0.4);
+          }
+        }
+      }
+    }
+
+    .top-bar-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+
+      .angle-badge {
+        display: flex;
+        align-items: center;
+        gap: 0.45rem;
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        color: #E2E8F0;
+        font-size: 0.75rem;
+        font-weight: 700;
+        padding: 0.4rem 0.85rem;
+        border-radius: $radius-full;
+
+        .pulse-dot {
+          width: 7px;
+          height: 7px;
+          border-radius: 50%;
+          background: #10B981;
+          box-shadow: 0 0 8px #10B981;
+          animation: badgePulse 2s infinite ease-in-out;
+        }
+      }
+
+      .video-status-badge {
+        display: flex;
+        align-items: center;
+        gap: 0.45rem;
+        background: rgba(239, 68, 68, 0.15);
+        border: 1px solid rgba(239, 68, 68, 0.4);
+        color: #FCA5A5;
+        font-size: 0.75rem;
+        font-weight: 700;
+        padding: 0.4rem 0.85rem;
+        border-radius: $radius-full;
+
+        .live-rec-dot {
+          width: 7px;
+          height: 7px;
+          border-radius: 50%;
+          background: #EF4444;
+          box-shadow: 0 0 8px #EF4444;
+          animation: recPulse 1.5s infinite ease-in-out;
+        }
+      }
+
+      .icon-tool-btn {
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        color: #F8FAFC;
+        font-size: 0.75rem;
+        font-weight: 700;
+        padding: 0.4rem 0.75rem;
+        border-radius: $radius-full;
+        cursor: pointer;
+        transition: all 0.2s ease;
+
+        &:hover {
+          background: rgba(255, 193, 7, 0.2);
+          border-color: #FFC107;
+          color: #FFC107;
+        }
+
+        &.active {
+          background: #FFC107;
+          color: #0F172A;
+        }
+      }
+    }
+  }
+
+  // Viewport Area
+  .canvas-3d-viewport {
+    position: relative;
+    width: 100%;
+    min-height: 440px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: grab;
+    user-select: none;
+    overflow: hidden;
+
+    &:active {
+      cursor: grabbing;
+    }
+
+    @include mobile {
+      min-height: 350px;
+    }
+  }
+
+  // Turntable Stage for Real Car Photo
+  .turntable-stage {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 440px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    perspective: 1200px;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+
+    &.zoomed {
+      transform: scale(1.15);
+    }
+
+    .studio-lighting-dome {
+      position: absolute;
+      top: 5%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 75%;
+      height: 40%;
+      background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0) 70%);
+      pointer-events: none;
+    }
+
+    // 3D Turntable Platform (Ground Disc)
+    .turntable-platform {
+      position: absolute;
+      bottom: 22px;
+      left: 50%;
+      transform: translateX(-50%) rotateX(72deg);
+      width: 82%;
+      height: 140px;
+      pointer-events: none;
+
+      .turntable-ring-outer {
+        position: absolute;
+        inset: 0;
+        border-radius: 50%;
+        border: 2px solid rgba(255, 193, 7, 0.35);
+        box-shadow: 0 0 25px rgba(255, 193, 7, 0.2), inset 0 0 20px rgba(255, 193, 7, 0.15);
+      }
+
+      .turntable-ring-inner {
+        position: absolute;
+        inset: 12px;
+        border-radius: 50%;
+        border: 1px dashed rgba(255, 255, 255, 0.2);
+      }
+
+      .turntable-neon-glow {
+        position: absolute;
+        inset: 20%;
+        border-radius: 50%;
+        background: radial-gradient(ellipse at center, rgba(255, 193, 7, 0.3) 0%, rgba(255, 193, 7, 0) 70%);
+        filter: blur(14px);
+      }
+    }
+
+    // Real Vehicle Wrapper
+    .vehicle-image-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 88%;
+      max-width: 580px;
+      z-index: 2;
+      transition: transform 0.15s ease-out;
+
+      .turntable-car-img {
+        width: 100%;
+        max-height: 310px;
+        object-fit: contain;
+        display: block;
+        pointer-events: none;
+        transition: filter 0.2s ease;
+      }
+    }
+
+    // Floating Watch Video Button (Prominently featured for Sedan)
+    .watch-video-floating-btn {
+      position: absolute;
+      top: 1.25rem;
+      right: 1.25rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.55rem 1.15rem;
+      font-size: 0.82rem;
+      font-weight: 800;
+      border-radius: $radius-full;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1.5px solid #FFC107;
+      color: #FFC107;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4), 0 0 16px rgba(255, 193, 7, 0.35);
+      cursor: pointer;
+      z-index: 6;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+
+      .play-icon {
+        font-size: 0.85rem;
+        color: #FFC107;
+      }
+
+      &:hover {
+        transform: translateY(-2px) scale(1.05);
+        background: #FFC107;
+        color: #0F172A;
+        box-shadow: 0 8px 25px rgba(255, 193, 7, 0.5);
+
+        .play-icon {
+          color: #0F172A;
+        }
+      }
+    }
+
+    // Interactive Hotspots on Car
+    .hotspot-pin {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: rgba(15, 23, 42, 0.85);
+      border: 2px solid #FFC107;
+      color: #FFFFFF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 5;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 0 15px rgba(255, 193, 7, 0.6);
+
+      .pin-icon {
+        font-size: 0.95rem;
+        line-height: 1;
+        transition: transform 0.2s ease;
+      }
+
+      .pin-pulse {
+        position: absolute;
+        inset: -5px;
+        border-radius: 50%;
+        border: 1.5px solid #FFC107;
+        animation: hotspotRipple 2s infinite ease-out;
+        pointer-events: none;
+      }
+
+      &:hover {
+        transform: translate(-50%, -50%) scale(1.22);
+        background: #FFC107;
+        color: #0F172A;
+      }
+
+      &.active {
+        background: #FFC107;
+        color: #0F172A;
+        transform: translate(-50%, -50%) scale(1.25);
+      }
+    }
+
+    // Active Hotspot Card Overlay
+    .hotspot-card-overlay {
+      position: absolute;
+      top: 1.5rem;
+      left: 1.5rem;
+      right: 1.5rem;
+      max-width: 360px;
+      z-index: 8;
+      animation: fadeInUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+
+      .hotspot-card {
+        position: relative;
+        background: rgba(15, 23, 42, 0.94);
+        backdrop-filter: blur(16px);
+        border: 1.5px solid rgba(255, 193, 7, 0.5);
+        border-radius: $radius-lg;
+        padding: 1.25rem;
+        color: #F8FAFC;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+
+        .close-hotspot-btn {
+          position: absolute;
+          top: 0.65rem;
+          right: 0.75rem;
+          background: rgba(255, 255, 255, 0.1);
+          border: none;
+          color: #CBD5E1;
+          font-size: 0.85rem;
+          width: 24px;
+          height: 24px;
+          border-radius: 50%;
+          cursor: pointer;
+
+          &:hover {
+            background: #D32F2F;
+            color: #FFFFFF;
+          }
+        }
+
+        .hotspot-header {
+          display: flex;
+          align-items: center;
+          gap: 0.6rem;
+          margin-bottom: 0.5rem;
+
+          .h-icon {
+            font-size: 1.35rem;
+          }
+
+          h4 {
+            font-size: 1rem;
+            color: #FFC107;
+            font-weight: 700;
+            margin: 0;
+          }
+        }
+
+        .h-desc {
+          font-size: 0.85rem;
+          line-height: 1.5;
+          color: #CBD5E1;
+          margin-bottom: 0.75rem;
+        }
+
+        .h-verify-badge {
+          font-size: 0.72rem;
+          font-weight: 700;
+          color: #10B981;
+          display: flex;
+          align-items: center;
+          gap: 0.3rem;
+        }
+      }
+    }
+
+    // Drag hint badge
+    .drag-hint {
+      position: absolute;
+      bottom: 1.25rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #E2E8F0;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.35rem 0.85rem;
+      border-radius: $radius-full;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+
+      &.hidden {
+        opacity: 0;
+      }
+    }
+  }
+
+  // 360 Video Stage (Authentic Sedan Walkaround Video)
+  .video-stage {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 440px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+
+    &.zoomed {
+      transform: scale(1.08);
+    }
+
+    .video-container {
+      position: relative;
+      width: 100%;
+      max-width: 650px;
+      border-radius: $radius-lg;
+      overflow: hidden;
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.65), 0 0 30px rgba(255, 193, 7, 0.15);
+      border: 1.5px solid rgba(255, 255, 255, 0.15);
+      background: #000000;
+
+      .showroom-video-element {
+        width: 100%;
+        max-height: 380px;
+        object-fit: contain;
+        display: block;
+        cursor: pointer;
+        background: #000000;
+      }
+
+      .video-ambient-glow {
+        position: absolute;
+        inset: -20px;
+        background: radial-gradient(ellipse at center, rgba(255, 193, 7, 0.12) 0%, transparent 70%);
+        pointer-events: none;
+        z-index: -1;
+      }
+
+      .video-live-badge {
+        position: absolute;
+        top: 1rem;
+        left: 1rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        background: rgba(15, 23, 42, 0.88);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: #F8FAFC;
+        font-size: 0.75rem;
+        font-weight: 700;
+        padding: 0.35rem 0.85rem;
+        border-radius: $radius-full;
+        z-index: 5;
+        pointer-events: none;
+
+        .red-recording-dot {
+          width: 8px;
+          height: 8px;
+          border-radius: 50%;
+          background: #EF4444;
+          box-shadow: 0 0 8px #EF4444;
+          animation: recPulse 1.5s infinite ease-in-out;
+        }
+      }
+
+      .video-controls-overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem;
+        padding: 0.85rem 1.25rem;
+        background: linear-gradient(to top, rgba(15, 23, 42, 0.95) 0%, rgba(15, 23, 42, 0.6) 70%, transparent 100%);
+        z-index: 5;
+
+        .video-ctrl-btn {
+          background: rgba(255, 255, 255, 0.15);
+          border: 1px solid rgba(255, 255, 255, 0.25);
+          color: #FFFFFF;
+          width: 34px;
+          height: 34px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          font-size: 0.85rem;
+          transition: all 0.2s ease;
+
+          &:hover {
+            background: #FFC107;
+            border-color: #FFC107;
+            color: #0F172A;
+            transform: scale(1.1);
+          }
+        }
+
+        .video-pill-info {
+          display: flex;
+          align-items: center;
+          gap: 0.4rem;
+          font-size: 0.75rem;
+          font-weight: 700;
+          color: #E2E8F0;
+          background: rgba(255, 255, 255, 0.1);
+          padding: 0.35rem 0.85rem;
+          border-radius: $radius-full;
+
+          .dot-green {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #10B981;
+          }
+        }
+      }
+    }
+  }
+
+  // Interior Luxury Cabin Stage
+  .interior-stage {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 440px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1.25rem;
+    overflow: hidden;
+
+    &.zoomed .interior-cabin-img {
+      transform: scale(1.18);
+    }
+
+    .interior-cabin-img {
+      max-width: 95%;
+      max-height: 320px;
+      object-fit: cover;
+      border-radius: $radius-lg;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .interior-badges-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 1rem;
+      max-width: 92%;
+
+      .interior-pill {
+        display: flex;
+        align-items: center;
+        gap: 0.35rem;
+        background: rgba(15, 23, 42, 0.85);
+        border: 1px solid rgba(255, 193, 7, 0.35);
+        padding: 0.35rem 0.75rem;
+        border-radius: $radius-full;
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: #F8FAFC;
+
+        .pill-icon {
+          font-size: 0.85rem;
+        }
+      }
+    }
+  }
+
+  // Bottom Control Deck (Presets & Slider)
+  .showroom-control-deck {
+    background: rgba(15, 23, 42, 0.95);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 1rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+
+    .preset-angles-row {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+
+      .deck-label {
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: #94A3B8;
+        text-transform: uppercase;
+        margin-right: 0.3rem;
+      }
+
+      .preset-chip {
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        color: #CBD5E1;
+        font-size: 0.72rem;
+        font-weight: 700;
+        padding: 0.3rem 0.65rem;
+        border-radius: $radius-full;
+        cursor: pointer;
+        transition: all 0.2s ease;
+
+        &:hover {
+          background: rgba(255, 193, 7, 0.2);
+          border-color: #FFC107;
+          color: #FFC107;
+        }
+
+        &.active {
+          background: #FFC107;
+          color: #0F172A;
+          border-color: #FFC107;
+          box-shadow: 0 0 10px rgba(255, 193, 7, 0.4);
+        }
+      }
+    }
+
+    .slider-and-play-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+
+      .ctrl-btn-round {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        padding: 0.4rem 0.95rem;
+        font-size: 0.78rem;
+        font-weight: 700;
+        border-radius: $radius-full;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: #F8FAFC;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        white-space: nowrap;
+
+        &:hover {
+          background: rgba(255, 193, 7, 0.25);
+          border-color: #FFC107;
+          color: #FFC107;
+        }
+
+        &.active {
+          background: #FFC107;
+          color: #0F172A;
+          border-color: #FFC107;
+          box-shadow: 0 0 12px rgba(255, 193, 7, 0.4);
+        }
+      }
+
+      .slider-box {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+
+        .turntable-range-slider {
+          flex: 1;
+          height: 6px;
+          border-radius: 3px;
+          background: rgba(255, 255, 255, 0.2);
+          accent-color: #FFC107;
+          outline: none;
+          cursor: pointer;
+        }
+
+        .range-val {
+          font-family: monospace;
+          font-size: 0.85rem;
+          font-weight: 700;
+          color: #FFC107;
+          min-width: 42px;
+          text-align: right;
+        }
+      }
+    }
+  }
+}
+
+// Specs Panel
+.fleet-specs-card {
+  padding: 2.25rem;
+  background: rgba(255, 255, 255, 0.92);
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+
+  @include mobile {
+    padding: 1.5rem;
+  }
+
+  .specs-header {
+    margin-bottom: 1.15rem;
+
+    .specs-badge {
+      display: inline-block;
+      background: rgba(211, 47, 47, 0.1);
+      color: $color-secondary;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.65rem;
+      border-radius: $radius-full;
+      margin-bottom: 0.5rem;
+    }
+
+    h3 {
+      font-size: 1.85rem;
+      color: $color-text-primary;
+    }
+
+    .specs-tagline {
+      font-size: 0.9rem;
+      color: $color-text-secondary;
+    }
+  }
+
+  .specs-price-banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.85rem 1.25rem;
+    background: rgba(255, 193, 7, 0.12);
+    border: 1px solid rgba(255, 193, 7, 0.3);
+    border-radius: $radius-md;
+    margin-bottom: 1.25rem;
+
+    .price-big {
+      font-family: $font-heading;
+      font-size: 2.2rem;
+      font-weight: 900;
+      color: $color-secondary;
+
+      .unit {
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: $color-text-secondary;
+      }
+    }
+
+    .transparent-fare-pill {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #9A6200;
+      background: #FFFFFF;
+      padding: 0.3rem 0.65rem;
+      border-radius: $radius-full;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    }
+  }
+
+  .vehicle-long-desc {
+    font-size: 0.92rem;
+    line-height: 1.6;
+    color: $color-text-secondary;
+    margin-bottom: 1.25rem;
+  }
+
+  .specs-metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+
+    .metric-box {
+      padding: 0.75rem 1rem;
+      background: #F8FAFC;
+      border: 1px solid #E2E8F0;
+      border-radius: $radius-md;
+      display: flex;
+      flex-direction: column;
+
+      .metric-label {
+        font-size: 0.7rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: $color-text-muted;
+      }
+
+      .metric-value {
+        font-size: 0.88rem;
+        font-weight: 700;
+        color: $color-text-primary;
+        margin-top: 0.2rem;
+      }
+    }
+  }
+
+  .vehicle-features-box {
+    margin-bottom: 2rem;
+
+    h5 {
+      font-size: 0.85rem;
+      margin-bottom: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: $color-text-primary;
+    }
+
+    ul {
+      list-style: none;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.5rem;
+
+      li {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.85rem;
+        color: $color-text-secondary;
+
+        .check-icon {
+          color: #10B981;
+          font-weight: 800;
+        }
+      }
+    }
+  }
+
+  .w-full {
+    width: 100%;
+  }
+}
+
+// Animations
+@keyframes badgePulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.35);
+    opacity: 0.7;
+  }
+}
+
+@keyframes hotspotRipple {
+  0% {
+    transform: scale(1);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(1.9);
+    opacity: 0;
+  }
+}
+
+@keyframes recPulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.35;
+    transform: scale(1.25);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

@@ -1,0 +1,71 @@
+@use '../../../styles/variables' as *;
+@use '../../../styles/responsive' as *;
+
+.why-us-section {
+  background: transparent;
+}
+
+.why-us-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+
+  @include screen-sm {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include screen-lg {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.why-card {
+  padding: 2.2rem;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border-radius: $radius-xl;
+  background: rgba(255, 255, 255, 0.85);
+
+  .why-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+
+    .why-icon-box {
+      width: 52px;
+      height: 52px;
+      border-radius: $radius-md;
+      background: linear-gradient(135deg, rgba(255, 193, 7, 0.25) 0%, rgba(211, 47, 47, 0.15) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      box-shadow: 0 4px 14px rgba(255, 193, 7, 0.2);
+    }
+
+    .why-badge {
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.75rem;
+      background: rgba(15, 23, 42, 0.05);
+      border-radius: $radius-full;
+      color: $color-text-secondary;
+    }
+  }
+
+  .why-card-title {
+    font-size: 1.35rem;
+    margin-bottom: 0.75rem;
+    color: $color-text-primary;
+  }
+
+  .why-card-desc {
+    font-size: 0.95rem;
+    line-height: 1.65;
+    color: $color-text-secondary;
+  }
+}

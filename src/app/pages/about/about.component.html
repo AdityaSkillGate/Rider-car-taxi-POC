@@ -1,0 +1,114 @@
+<div class="about-page">
+  <!-- Page Hero Banner -->
+  <section class="about-hero">
+    <div class="container">
+      <div class="about-hero-content">
+        <span class="section-badge">{{ i18n.isTamil() ? 'ரைடர் கால் டாக்ஸி பற்றி' : 'ABOUT RIDER CALL TAXI' }}</span>
+        <h1>{{ i18n.isTamil() ? 'பெருமையுடன் சேவை புரிகிறோம்' : 'Proudly Serving' }} <span class="highlight-yellow">{{ i18n.isTamil() ? 'சங்கரன்கோவில்' : 'Sankarankovil' }}</span> & {{ i18n.isTamil() ? 'தமிழ்நாடு' : 'Tamil Nadu' }}</h1>
+        <p class="about-hero-sub">
+          {{ i18n.isTamil() 
+            ? 'அநியாயக் கட்டணங்கள், தேவையற்ற தாமதங்கள் இன்றி நேர்மையான ₹14/கி.மீ கட்டணத்தில் பண்பான, சரிபார்க்கப்பட்ட ஓட்டுநர்களுடன் பாதுகாப்பான பயணத்தை வழங்குவதே எங்கள் நோக்கம்.' 
+            : 'Founded with a simple mission: To eliminate unfair taxi fares, delays, and poor cabs. We deliver reliable, honest ₹14/KM rides with polite, police-verified chauffeurs.' }}
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Story & Heritage Section -->
+  <section class="section about-story-section">
+    <div class="container">
+      <div class="story-grid">
+        <div class="story-image-pane">
+          <div class="brand-heritage-card glass-card">
+            <img src="/images/logo.png" alt="Rider Call Taxi Emblem" class="heritage-logo" />
+            <h3>{{ i18n.isTamil() ? 'சங்கரன்கோவில் பாரம்பரியத்தின் அடையாளம்' : 'Rooted in Sankarankovil Heritage' }}</h3>
+            <p>
+              {{ i18n.isTamil() 
+                ? 'எங்கள் இலச்சினையில் உள்ள வரலாற்று சிறப்புமிக்க சங்கரநாராயண சுவாமி கோவில் கோபுரம் போன்று, நேர்மை, நம்பிக்கை மற்றும் தமிழ் விருந்தோம்பலே எங்கள் டாக்ஸி சேவையின் தாரக மந்திரம்.' 
+                : 'Like the historic Gopuram that graces our emblem, Rider Call Taxi stands for integrity, trust, and warm hospitality for every passenger who steps into our cabs.' }}
+            </p>
+            <div class="heritage-stats">
+              <div>
+                <strong>10,000+</strong>
+                <span>{{ i18n.isTamil() ? 'வெற்றிகர பயணங்கள்' : 'Completed Trips' }}</span>
+              </div>
+              <div>
+                <strong>500+</strong>
+                <span>{{ i18n.isTamil() ? 'சரிபார்க்கப்பட்ட ஓட்டுநர்கள்' : 'Verified Drivers' }}</span>
+              </div>
+              <div>
+                <strong>4.9★</strong>
+                <span>{{ i18n.isTamil() ? 'கூகுள் மதிப்பீடு' : 'Google Rating' }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="story-text-pane">
+          <span class="section-badge">{{ i18n.isTamil() ? 'எங்கள் நோக்கம்' : 'OUR PURPOSE' }}</span>
+          <h2>{{ i18n.isTamil() ? 'பாரம்பரிய பண்புகளுடன்' : 'A Modern Taxi Service With' }} <span class="highlight-red">{{ i18n.isTamil() ? 'நவீன டாக்ஸி சேவை' : 'Traditional Values' }}</span></h2>
+          <p>
+            {{ i18n.isTamil() 
+              ? '757A/7, MPM காம்ப்ளக்ஸ், ராஜபாளையம் மெயின் ரோடு, சங்கரன்கோவிலில் அமைந்துள்ள எங்கள் தலைமையகம் தென்காசி, திருநெல்வேலி, ராஜபாளையம் மற்றும் மதுரையை இணைக்கும் முக்கிய சந்திப்பில் உள்ளது.' 
+              : 'Located at 757A/7, MPM Complex, Rajapalayam Main Road, Sankarankovil, we are at the crossroads connecting Tenkasi, Tirunelveli, Rajapalayam, and Madurai.' }}
+          </p>
+          <p>
+            {{ i18n.isTamil() 
+              ? 'மதுரை விமான நிலையம் செல்ல அதிகாலை புறப்படும் குடும்பங்கள், சங்கரன்கோவில் கோமதி அம்மன் & திருச்செந்தூர் முருகன் கோவில் தரிசனம் செய்யும் பக்தர்கள் அல்லது சென்னை செல்லும் கார்ப்பரேட் பயணிகள் என அனைவருக்கும் மரியாதை மற்றும் குறித்த நேர சேவை.' 
+              : 'Whether it is an anxious family catching an early morning flight from Madurai Airport, pilgrims visiting the holy shrines of Gomathi Amman and Tiruchendur Murugan, or business commuters heading to Chennai, our drivers treat every passenger with respect, punctuality, and utmost care.' }}
+          </p>
+          
+          <div class="story-cta-row">
+            <a routerLink="/contact" class="btn btn-primary btn-lg">
+              <span>{{ i18n.isTamil() ? 'இன்றே முன்பதிவு செய்ய' : 'Book With Us Today' }}</span>
+            </a>
+            <a [href]="'tel:' + taxiData.company.phone1" class="btn btn-outline btn-lg">
+              <span>{{ i18n.isTamil() ? 'அலுவலகத்தை அழைக்க' : 'Call Operations Desk' }}</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Safety Standards -->
+  <section class="section safety-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-badge">{{ i18n.isTamil() ? 'பாதுகாப்பு உத்தரவாதம்' : 'SAFETY GUARANTEE' }}</span>
+        <h2 class="section-title">{{ i18n.isTamil() ? 'உங்கள் பாதுகாப்பே எங்கள் முதல் முன்னுரிமை' : 'Your Safety Is Non-Negotiable' }}</h2>
+        <p class="section-subtitle">{{ i18n.isTamil() ? 'பெண்கள், முதியவர்கள் மற்றும் குழந்தைகள் முழு அமைதியோடும் பாதுகாப்போடும் பயணிக்க அனைத்து வசதிகளும் செய்யப்பட்டுள்ளன.' : 'Every precaution is in place so women, elderly passengers, and children can travel with complete comfort and peace of mind.' }}</p>
+      </div>
+
+      <div class="safety-grid">
+        @for (item of safetyStandards(); track item.title) {
+          <div class="safety-card glass-card">
+            <div class="safety-icon">{{ item.icon }}</div>
+            <h3>{{ item.title }}</h3>
+            <p>{{ item.desc }}</p>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Milestones Timeline -->
+  <section class="section milestones-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-badge">{{ i18n.isTamil() ? 'எங்கள் பயணம்' : 'OUR JOURNEY' }}</span>
+        <h2 class="section-title">{{ i18n.isTamil() ? 'வெற்றிகரமான மைல்கற்கள்' : 'Milestones of Excellence' }}</h2>
+      </div>
+
+      <div class="timeline-grid">
+        @for (m of milestones(); track m.year) {
+          <div class="timeline-card glass-card">
+            <div class="timeline-year">{{ m.year }}</div>
+            <h4>{{ m.title }}</h4>
+            <p>{{ m.desc }}</p>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+</div>

@@ -1,0 +1,355 @@
+<section class="section fleet-showcase-section" id="fleet">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-badge">{{ i18n.t('fleet.badge') }}</span>
+      <h2 class="section-title">
+        {{ i18n.t('fleet.title') }} <span class="highlight-yellow">{{ i18n.t('fleet.titleHighlight') }}</span>
+      </h2>
+      <p class="section-subtitle">
+        {{ i18n.isTamil() 
+          ? 'எங்கள் உண்மையான வாகனங்களின் நேரடி புகைப்படங்களை 360° சுழற்றி, நேரடி வீடியோ மற்றும் சொகுசு உட்புற அமைப்புகளையும் நேரில் பார்ப்பது போல் கண்டறியுங்கள்.' 
+          : 'Inspect our authentic fleet with real studio photographs in 360° interactive rotation, live video walkaround, and luxury interior cabin.' }}
+      </p>
+    </div>
+
+    <!-- Category Switcher Tabs -->
+    <div class="fleet-category-tabs">
+      <button class="cat-tab-btn" 
+              [class.active]="activeVehicleCategory() === 'sedan'" 
+              (click)="selectCategory('sedan')">
+        <span>🚗 Sedan (Dzire / Etios)</span>
+      </button>
+      <button class="cat-tab-btn" 
+              [class.active]="activeVehicleCategory() === 'suv'" 
+              (click)="selectCategory('suv')">
+        <span>🚙 SUV (Innova Crysta 7-Seater)</span>
+      </button>
+      <button class="cat-tab-btn" 
+              [class.active]="activeVehicleCategory() === 'tempo'" 
+              (click)="selectCategory('tempo')">
+        <span>🚐 Tempo Traveller (14-Seater)</span>
+      </button>
+      <button class="cat-tab-btn" 
+              [class.active]="activeVehicleCategory() === 'corporate'" 
+              (click)="selectCategory('corporate')">
+        <span>⭐ Corporate Luxury Cab</span>
+      </button>
+      <button class="cat-tab-btn" 
+              [class.active]="activeVehicleCategory() === 'hatchback'" 
+              (click)="selectCategory('hatchback')">
+        <span>🚕 Hatchback (Swift / WagonR)</span>
+      </button>
+    </div>
+
+    <div class="fleet-studio-grid">
+      <!-- 360° Interactive Showroom Card -->
+      <div class="fleet-canvas-card glass-card glass-card--dark">
+        <!-- Showroom Top Bar: View Mode Switcher & Angle readout -->
+        <div class="showroom-top-bar">
+          <div class="view-mode-tabs">
+            <button class="mode-tab-btn" 
+                    [class.active]="viewMode() === 'exterior'"
+                    (click)="setViewMode('exterior')">
+              <span>🚗 360° {{ i18n.isTamil() ? 'வெளிப்புறம்' : 'Exterior' }}</span>
+            </button>
+
+            @if (currentVehicle.videoUrl) {
+              <button class="mode-tab-btn mode-tab-btn--video" 
+                      [class.active]="viewMode() === 'video'"
+                      (click)="setViewMode('video')">
+                <span class="video-pulse-dot"></span>
+                <span>🎥 360° {{ i18n.isTamil() ? 'நேரடி வீடியோ' : 'Live Video' }}</span>
+              </button>
+            }
+
+            <button class="mode-tab-btn" 
+                    [class.active]="viewMode() === 'interior'"
+                    (click)="setViewMode('interior')">
+              <span>🛋️ {{ i18n.isTamil() ? 'சொகுசு உட்புறம்' : 'Luxury Interior' }}</span>
+            </button>
+          </div>
+
+          <div class="top-bar-actions">
+            @if (viewMode() === 'exterior') {
+              <div class="angle-badge">
+                <span class="pulse-dot"></span>
+                <span>{{ angleDescription() }}</span>
+              </div>
+            }
+            @if (viewMode() === 'video') {
+              <div class="video-status-badge">
+                <span class="live-rec-dot"></span>
+                <span>{{ i18n.isTamil() ? 'நேரடி வீடியோ' : 'Live Video' }}</span>
+              </div>
+            }
+            <button class="icon-tool-btn" 
+                    [class.active]="isZoomed()" 
+                    (click)="toggleZoom()" 
+                    [title]="isZoomed() ? 'Zoom out' : 'Zoom in'">
+              <span>{{ isZoomed() ? '🔍 1x' : '🔍 1.2x' }}</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- 360 Interactive Stage Viewport -->
+        <div class="canvas-3d-viewport" 
+             (mousedown)="onMouseDown($event)"
+             (mousemove)="onMouseMove($event)"
+             (mouseup)="onMouseUp()"
+             (mouseleave)="onMouseUp()"
+             (touchstart)="onTouchStart($event)"
+             (touchmove)="onTouchMove($event)"
+             (touchend)="onTouchEnd()">
+          
+          <!-- EXTERIOR 360 VIEW -->
+          @if (viewMode() === 'exterior') {
+            <div class="turntable-stage" [class.zoomed]="isZoomed()">
+              <!-- Studio Light Glare Behind -->
+              <div class="studio-lighting-dome"></div>
+              
+              <!-- 3D Turntable Platform -->
+              <div class="turntable-platform">
+                <div class="turntable-ring-outer"></div>
+                <div class="turntable-ring-inner"></div>
+                <div class="turntable-neon-glow"></div>
+              </div>
+
+              <!-- Real Vehicle Original Photo -->
+              <div class="vehicle-image-wrapper" [style.transform]="turntableTransform">
+                <img [src]="currentVehicle.image" 
+                     [alt]="currentVehicle.name" 
+                     class="turntable-car-img" 
+                     [style.filter]="'drop-shadow(' + turntableShadow + ')'"
+                     draggable="false" />
+
+                <!-- Interactive Hotspots on Car -->
+                @for (h of hotspots; track h.id) {
+                  <button class="hotspot-pin" 
+                          [style.top.%]="h.topPct" 
+                          [style.left.%]="h.leftPct"
+                          [class.active]="activeHotspotId() === h.id"
+                          (click)="$event.stopPropagation(); toggleHotspot(h.id)"
+                          [attr.aria-label]="i18n.isTamil() ? h.titleTa : h.titleEn">
+                    <span class="pin-icon">{{ h.icon }}</span>
+                    <span class="pin-pulse"></span>
+                  </button>
+                }
+              </div>
+
+              <!-- Active Hotspot Modal Card -->
+              @if (activeHotspot; as h) {
+                <div class="hotspot-card-overlay" (click)="$event.stopPropagation()">
+                  <div class="hotspot-card">
+                    <button class="close-hotspot-btn" (click)="closeHotspot()">✕</button>
+                    <div class="hotspot-header">
+                      <span class="h-icon">{{ h.icon }}</span>
+                      <h4>{{ i18n.isTamil() ? h.titleTa : h.titleEn }}</h4>
+                    </div>
+                    <p class="h-desc">{{ i18n.isTamil() ? h.descTa : h.descEn }}</p>
+                    <div class="h-verify-badge">
+                      <span>✓ {{ i18n.isTamil() ? '100% நேரில் சரிபார்க்கப்பட்ட வசதி' : '100% Genuine Fleet Feature' }}</span>
+                    </div>
+                  </div>
+                </div>
+              }
+
+              <!-- Floating Watch Video CTA (Prominent for Sedan) -->
+              @if (currentVehicle.videoUrl) {
+                <button class="watch-video-floating-btn" (click)="$event.stopPropagation(); setViewMode('video')">
+                  <span class="play-icon">▶</span>
+                  <span>{{ i18n.isTamil() ? '360° நேரடி வீடியோவை காண்க' : 'Watch 360° Live Video' }}</span>
+                </button>
+              }
+
+              <!-- Interaction Hint -->
+              <div class="drag-hint" [class.hidden]="!isRotatingAuto() && !activeHotspotId()">
+                <span class="hand-icon">👆</span>
+                <span>{{ i18n.t('fleet.dragHint') }}</span>
+              </div>
+            </div>
+          }
+
+          <!-- 360 VIDEO STAGE (Dzire / Etios Video Walkaround) -->
+          @if (viewMode() === 'video' && currentVehicle.videoUrl) {
+            <div class="video-stage" [class.zoomed]="isZoomed()">
+              <div class="video-container">
+                <video #carVideo
+                       [src]="currentVehicle.videoUrl" 
+                       class="showroom-video-element"
+                       autoplay 
+                       loop 
+                       playsinline
+                       [muted]="isVideoMuted()"
+                       (click)="toggleVideoPlay(carVideo)">
+                </video>
+
+                <!-- Ambient Glow behind video -->
+                <div class="video-ambient-glow"></div>
+
+                <!-- Video Top Status -->
+                <div class="video-live-badge">
+                  <span class="red-recording-dot"></span>
+                  <span>{{ i18n.isTamil() ? 'அசல் கார் 360° சுழற்சி வீடியோ' : 'Authentic 360° Sedan Dzire / Etios Video' }}</span>
+                </div>
+
+                <!-- Video Controls Bar -->
+                <div class="video-controls-overlay">
+                  <button class="video-ctrl-btn" 
+                          (click)="toggleVideoPlay(carVideo)" 
+                          [title]="isVideoPlaying() ? 'Pause' : 'Play'">
+                    <span>{{ isVideoPlaying() ? '⏸️' : '▶️' }}</span>
+                  </button>
+
+                  <button class="video-ctrl-btn" 
+                          (click)="toggleVideoMute(carVideo)" 
+                          [title]="isVideoMuted() ? 'Unmute' : 'Mute'">
+                    <span>{{ isVideoMuted() ? '🔇' : '🔊' }}</span>
+                  </button>
+
+                  <div class="video-pill-info">
+                    <span class="dot-green"></span>
+                    <span>{{ currentVehicle.name }} ({{ currentVehicle.models }})</span>
+                  </div>
+
+                  <button class="video-ctrl-btn" 
+                          (click)="toggleFullscreen(carVideo)" 
+                          title="Fullscreen">
+                    <span>⛶</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          }
+
+          <!-- INTERIOR LUXURY CABIN VIEW -->
+          @if (viewMode() === 'interior') {
+            <div class="interior-stage" [class.zoomed]="isZoomed()">
+              <img [src]="currentVehicle.interiorImage" 
+                   [alt]="currentVehicle.name + ' Interior'" 
+                   class="interior-cabin-img"
+                   draggable="false" />
+              
+              <!-- Interior Highlights Badges -->
+              <div class="interior-badges-grid">
+                <div class="interior-pill">
+                  <span class="pill-icon">💺</span>
+                  <span>{{ i18n.isTamil() ? 'சொகுசு சாய்வு இருக்கைகள்' : 'Reclining Pushback Seats' }}</span>
+                </div>
+                <div class="interior-pill">
+                  <span class="pill-icon">❄️</span>
+                  <span>{{ i18n.isTamil() ? 'தனித்தனி ஏசி காற்று வசதி' : 'Individual AC Blowers' }}</span>
+                </div>
+                <div class="interior-pill">
+                  <span class="pill-icon">📱</span>
+                  <span>{{ i18n.isTamil() ? 'மொபைல் சார்ஜிங் பாயிண்ட்' : 'High-Speed USB Charging' }}</span>
+                </div>
+                <div class="interior-pill">
+                  <span class="pill-icon">🧼</span>
+                  <span>{{ i18n.isTamil() ? 'தினசரி கிருமிநாசினி சுத்தம்' : 'Daily Sanitized & Clean' }}</span>
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+
+        <!-- 360 Rotation Control Bar (Only in exterior mode) -->
+        @if (viewMode() === 'exterior') {
+          <div class="showroom-control-deck">
+            <!-- Preset View Buttons -->
+            <div class="preset-angles-row">
+              <span class="deck-label">{{ i18n.isTamil() ? 'கோணங்கள்:' : 'Views:' }}</span>
+              <button class="preset-chip" [class.active]="rotationAngle() === 0" (click)="setPresetAngle(0)">
+                {{ i18n.isTamil() ? 'முன்பக்கம் 0°' : 'Front 0°' }}
+              </button>
+              <button class="preset-chip" [class.active]="rotationAngle() === 45" (click)="setPresetAngle(45)">
+                {{ i18n.isTamil() ? 'முக்கால் 45°' : '3/4 View 45°' }}
+              </button>
+              <button class="preset-chip" [class.active]="rotationAngle() === 90" (click)="setPresetAngle(90)">
+                {{ i18n.isTamil() ? 'பக்கவாட்டு 90°' : 'Side 90°' }}
+              </button>
+              <button class="preset-chip" [class.active]="rotationAngle() === 180" (click)="setPresetAngle(180)">
+                {{ i18n.isTamil() ? 'பின்பக்கம் 180°' : 'Rear 180°' }}
+              </button>
+              <button class="preset-chip" [class.active]="rotationAngle() === 270" (click)="setPresetAngle(270)">
+                {{ i18n.isTamil() ? 'இடதுபுறம் 270°' : 'Left Side 270°' }}
+              </button>
+            </div>
+
+            <!-- Slider and Play/Pause Controls -->
+            <div class="slider-and-play-row">
+              <button class="ctrl-btn-round" 
+                      [class.active]="isRotatingAuto()" 
+                      (click)="toggleAutoRotation()"
+                      [attr.aria-label]="isRotatingAuto() ? 'Pause auto rotate' : 'Start auto rotate'">
+                <span>{{ isRotatingAuto() ? '⏸️' : '▶️' }}</span>
+                <span class="btn-text">{{ isRotatingAuto() ? i18n.t('fleet.pause360') : i18n.t('fleet.rotate360') }}</span>
+              </button>
+
+              <div class="slider-box">
+                <input type="range" 
+                       min="0" 
+                       max="360" 
+                       [ngModel]="rotationAngle()" 
+                       (ngModelChange)="onAngleSliderChange($event)"
+                       class="turntable-range-slider" />
+                <span class="range-val">{{ rotationAngle().toFixed(0) }}°</span>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+
+      <!-- Vehicle Specs & Booking Panel -->
+      <div class="fleet-specs-card glass-card">
+        <div class="specs-header">
+          <span class="specs-badge">{{ currentVehicle.badge }}</span>
+          <h3>{{ currentVehicle.name }}</h3>
+          <p class="specs-tagline">{{ currentVehicle.tagline }}</p>
+        </div>
+
+        <div class="specs-price-banner">
+          <div class="price-big">₹{{ currentVehicle.ratePerKm }}<span class="unit">/ KM</span></div>
+          <span class="transparent-fare-pill">{{ i18n.isTamil() ? 'நேர்மையான வெளிப்படையான கட்டணம்' : 'Guaranteed Zero Hidden Costs' }}</span>
+        </div>
+
+        <p class="vehicle-long-desc">{{ currentVehicle.description }}</p>
+
+        <!-- Metrics Grid -->
+        <div class="specs-metrics-grid">
+          <div class="metric-box">
+            <span class="metric-label">{{ i18n.t('fleet.seating') }}</span>
+            <span class="metric-value">👥 {{ currentVehicle.specs.seating }} {{ i18n.isTamil() ? 'நபர்கள்' : 'Persons' }}</span>
+          </div>
+          <div class="metric-box">
+            <span class="metric-label">{{ i18n.t('fleet.luggage') }}</span>
+            <span class="metric-value">🧳 {{ currentVehicle.specs.bags }} {{ i18n.isTamil() ? 'பைகள்' : 'Large Bags' }}</span>
+          </div>
+          <div class="metric-box">
+            <span class="metric-label">{{ i18n.t('fleet.fuel') }}</span>
+            <span class="metric-value">⛽ {{ currentVehicle.specs.fuel }}</span>
+          </div>
+          <div class="metric-box">
+            <span class="metric-label">{{ i18n.t('fleet.comfort') }}</span>
+            <span class="metric-value">✨ {{ currentVehicle.specs.comfort }}</span>
+          </div>
+        </div>
+
+        <div class="vehicle-features-box">
+          <h5>{{ i18n.t('fleet.amenities') }}</h5>
+          <ul>
+            @for (item of currentVehicle.features; track item) {
+              <li>
+                <span class="check-icon">✓</span>
+                <span>{{ item }}</span>
+              </li>
+            }
+          </ul>
+        </div>
+
+        <button (click)="bookCurrentVehicle()" class="btn btn-primary btn-lg w-full">
+          <span>{{ i18n.t('fleet.bookOnWa') }} ({{ currentVehicle.name }})</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>

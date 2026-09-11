@@ -1,0 +1,52 @@
+@if (isLoading()) {
+  <div class="preloader-overlay" [class.fade-out]="isFadingOut()">
+    <div class="preloader-content">
+      <!-- Temple Gopuram Outline SVG with Stroke Animation -->
+      <div class="temple-svg-wrapper">
+        <svg viewBox="0 0 200 240" class="gopuram-svg" xmlns="http://www.w3.org/2000/svg">
+          <!-- Kalasam peaks -->
+          <path class="draw-path kalasam" d="M96 22 L100 10 L104 22 Z M80 26 L84 15 L88 26 Z M112 26 L116 15 L120 26 Z" />
+          <!-- Tower Tiers -->
+          <path class="draw-path" d="M70 35 L130 35 L125 55 L75 55 Z" />
+          <path class="draw-path" d="M65 58 L135 58 L130 82 L70 82 Z" />
+          <path class="draw-path" d="M60 85 L140 85 L135 115 L65 115 Z" />
+          <path class="draw-path" d="M55 118 L145 118 L140 152 L60 152 Z" />
+          <path class="draw-path" d="M50 155 L150 155 L146 195 L54 195 Z" />
+          <!-- Arch gateway -->
+          <path class="draw-path" d="M82 195 C82 170, 118 170, 118 195 Z" />
+          <!-- Decorative pillars -->
+          <line class="draw-path" x1="68" y1="155" x2="68" y2="195" />
+          <line class="draw-path" x1="132" y1="155" x2="132" y2="195" />
+        </svg>
+
+        <!-- Official Logo Reveal in center -->
+        <div class="logo-reveal-container">
+          <img src="/images/logo.png" alt="Rider Call Taxi Logo" class="official-logo-img" />
+        </div>
+      </div>
+
+      <!-- Animated Taxi Driving Across -->
+      <div class="road-track">
+        <div class="travel-taxi" [style.left.%]="progress()">
+          <div class="taxi-body">
+            <span class="taxi-roof-sign">TAXI</span>
+            <span class="taxi-headlight-beam"></span>
+            <span class="taxi-wheel wheel-left"></span>
+            <span class="taxi-wheel wheel-right"></span>
+          </div>
+        </div>
+        <div class="road-line"></div>
+      </div>
+
+      <!-- Brand Heading & Progress Indicator -->
+      <div class="brand-text-block">
+        <h1 class="brand-title">RIDER CALL TAXI</h1>
+        <p class="brand-sub">SANKARANKOVIL • TAMIL NADU</p>
+        <div class="progress-bar-container">
+          <div class="progress-bar-fill" [style.width.%]="progress()"></div>
+        </div>
+        <div class="progress-label">Preparing Premium Fleet... {{ progress() }}%</div>
+      </div>
+    </div>
+  </div>
+}

@@ -1,0 +1,349 @@
+@use 'styles/variables' as *;
+@use 'styles/animations' as *;
+@use 'styles/responsive' as *;
+
+// CSS Reset & Box Sizing
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  font-family: $font-main;
+  color: $color-text-primary;
+  background-color: #FAFCFF;
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(255, 193, 7, 0.07) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(211, 47, 47, 0.05) 0px, transparent 50%),
+    radial-gradient(at 50% 50%, rgba(255, 107, 53, 0.03) 0px, transparent 60%);
+  background-attachment: fixed;
+  overflow-x: hidden;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: $font-heading;
+  font-weight: 700;
+  line-height: 1.25;
+  color: $color-text-primary;
+  letter-spacing: -0.02em;
+}
+
+p {
+  color: $color-text-secondary;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: $transition-fast;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  outline: none;
+  font-family: $font-main;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+// Container
+.container {
+  width: 100%;
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+
+  @include screen-md {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+// Section styling
+.section {
+  padding: 5rem 0;
+  position: relative;
+
+  @include mobile {
+    padding: 3.5rem 0;
+  }
+
+  &-header {
+    text-align: center;
+    max-width: 760px;
+    margin: 0 auto 3.5rem auto;
+
+    .section-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(255, 193, 7, 0.15);
+      border: 1px solid rgba(255, 193, 7, 0.4);
+      color: #9A6200;
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 0.35rem 1rem;
+      border-radius: $radius-full;
+      margin-bottom: 1rem;
+    }
+
+    .section-title {
+      font-size: 2.25rem;
+      margin-bottom: 1rem;
+
+      @include screen-md {
+        font-size: 2.85rem;
+      }
+
+      .highlight-yellow {
+        color: #D97706;
+        position: relative;
+        display: inline-block;
+      }
+
+      .highlight-red {
+        color: $color-secondary;
+      }
+    }
+
+    .section-subtitle {
+      font-size: 1.1rem;
+      color: $color-text-secondary;
+      line-height: 1.6;
+    }
+  }
+}
+
+// Glassmorphism Cards & Universal Card Transitions
+.glass-card {
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: $radius-xl;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06), 0 1px 3px rgba(15, 23, 42, 0.04);
+  transition: transform 0.38s cubic-bezier(0.16, 1, 0.3, 1), 
+              box-shadow 0.38s cubic-bezier(0.16, 1, 0.3, 1), 
+              border-color 0.3s ease,
+              background 0.3s ease;
+  will-change: transform, box-shadow;
+
+  &:hover {
+    box-shadow: 0 22px 45px -10px rgba(15, 23, 42, 0.12), 0 0 24px rgba(255, 193, 7, 0.15);
+    transform: translateY(-7px) scale(1.012);
+    border-color: rgba(255, 193, 7, 0.45);
+  }
+
+  &--dark {
+    background: rgba(15, 23, 42, 0.88);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: #F8FAFC;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+
+    p {
+      color: #94A3B8;
+    }
+
+    &:hover {
+      border-color: rgba(255, 193, 7, 0.5);
+      box-shadow: 0 24px 50px rgba(0, 0, 0, 0.45), 0 0 30px rgba(255, 193, 7, 0.2);
+    }
+  }
+}
+
+// Universal Interactive Card Hover Dynamics across all Pages
+.service-card, 
+.service-master-card,
+.route-card, 
+.stat-card, 
+.testimonial-card, 
+.feature-card,
+.taxi-card,
+.enquiry-card,
+.enquiry-card-wrapper,
+.map-info-card,
+.safety-card,
+.timeline-card,
+.brand-heritage-card,
+.rate-card,
+.estimator-box,
+.info-card,
+.table-responsive-wrapper {
+  transition: transform 0.38s cubic-bezier(0.16, 1, 0.3, 1), 
+              box-shadow 0.38s cubic-bezier(0.16, 1, 0.3, 1), 
+              border-color 0.3s ease,
+              background 0.3s ease;
+  will-change: transform, box-shadow;
+
+  &:hover {
+    transform: translateY(-7px) scale(1.012);
+    box-shadow: 0 22px 45px -10px rgba(15, 23, 42, 0.12), 0 0 24px rgba(255, 193, 7, 0.2);
+    border-color: rgba(255, 193, 7, 0.45);
+  }
+}
+
+// Scroll Entrance Reveal Transitions
+.scroll-reveal-item {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), 
+              transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+
+  &.scroll-animated {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  &.stagger-1 { transition-delay: 0.05s; }
+  &.stagger-2 { transition-delay: 0.12s; }
+  &.stagger-3 { transition-delay: 0.19s; }
+  &.stagger-4 { transition-delay: 0.26s; }
+}
+
+// Page Hero Entrance Animation
+.about-hero-content,
+.services-hero-content,
+.fleet-hero-content,
+.pricing-hero-content,
+.contact-hero-content {
+  animation: pageHeroFadeIn 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes pageHeroFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Global Section Scroll Anchoring
+section[id], div[id] {
+  scroll-margin-top: 90px;
+}
+
+// Buttons
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 0.85rem 1.65rem;
+  border-radius: $radius-full;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  text-decoration: none;
+  white-space: nowrap;
+
+  &-primary {
+    background: linear-gradient(135deg, #FFC107 0%, #FF9800 100%);
+    color: #1E1B18;
+    box-shadow: 0 6px 20px rgba(255, 160, 0, 0.35);
+
+    &:hover {
+      background: linear-gradient(135deg, #FFD54F 0%, #FFA000 100%);
+      box-shadow: 0 8px 25px rgba(255, 160, 0, 0.5);
+      transform: translateY(-2px);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+
+  &-secondary {
+    background: linear-gradient(135deg, #D32F2F 0%, #B71C1C 100%);
+    color: #FFFFFF;
+    box-shadow: 0 6px 20px rgba(211, 47, 47, 0.35);
+
+    &:hover {
+      background: linear-gradient(135deg, #E53935 0%, #C62828 100%);
+      box-shadow: 0 8px 25px rgba(211, 47, 47, 0.5);
+      transform: translateY(-2px);
+    }
+  }
+
+  &-whatsapp {
+    background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+    color: #FFFFFF;
+    box-shadow: 0 6px 20px rgba(37, 211, 102, 0.35);
+
+    &:hover {
+      background: linear-gradient(135deg, #34E876 0%, #169E8F 100%);
+      box-shadow: 0 8px 25px rgba(37, 211, 102, 0.5);
+      transform: translateY(-2px);
+    }
+  }
+
+  &-outline {
+    background: rgba(255, 255, 255, 0.7);
+    color: $color-text-primary;
+    border: 1.5px solid rgba(15, 23, 42, 0.15);
+    backdrop-filter: blur(8px);
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.95);
+      border-color: $color-primary;
+      transform: translateY(-2px);
+      box-shadow: $shadow-md;
+    }
+  }
+
+  &-white {
+    background: #FFFFFF;
+    color: $color-text-primary;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+
+    &:hover {
+      background: #F8FAFC;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+    }
+  }
+
+  &-lg {
+    padding: 1.1rem 2.2rem;
+    font-size: 1.05rem;
+    font-weight: 700;
+  }
+}
+
+// Custom Scrollbar
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #F1F5F9;
+}
+::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94A3B8;
+}

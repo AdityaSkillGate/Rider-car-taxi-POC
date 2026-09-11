@@ -1,0 +1,243 @@
+<section class="hero-section">
+  <!-- Dynamic 3D Scene Background / Viewport -->
+  <div class="hero-3d-wrapper">
+    <div #threeCanvasContainer class="three-canvas-container"></div>
+    
+    <!-- 3D Environment Control Overlay -->
+    <!-- <div class="scene-controls-overlay">
+      <button class="scene-toggle-btn" (click)="toggleNightMode()" [class.active]="isNightMode()" title="Toggle Day/Night Mode">
+        <span>{{ isNightMode() ? i18n.t('hero.nightMode') : i18n.t('hero.dayMode') }}</span>
+      </button>
+      <button class="scene-toggle-btn" (click)="toggleRainMode()" [class.active]="isRainMode()" title="Toggle Monsoon Rain Effect">
+        <span>{{ isRainMode() ? i18n.t('hero.rainOn') : i18n.t('hero.clearSky') }}</span>
+      </button>
+    </div> -->
+  </div>
+
+  <div class="container hero-container">
+    <div class="hero-grid">
+      <!-- Left Hero Content -->
+      <div class="hero-content">
+        <div class="hero-badge">
+          <span class="pulse-dot"></span>
+          <span>{{ i18n.t('hero.badge') }}</span>
+        </div>
+
+        <h1 class="hero-title">
+          {{ i18n.t('hero.title1') }} <span class="highlight-text">{{ i18n.t('hero.titleHighlight') }}</span> {{ i18n.t('hero.title2') }}
+        </h1>
+
+        <!-- <p class="hero-subtitle">
+          {{ i18n.t('hero.sub') }}
+        </p> -->
+
+        <!-- CTAs -->
+        <div class="hero-action-buttons">
+          <button (click)="dispatchWhatsAppBooking()" class="btn btn-primary btn-lg hero-cta-btn">
+            <span>{{ i18n.t('hero.bookBtn') }}</span>
+            <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2.5" fill="none">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </button>
+
+          <a [href]="'tel:' + taxiData.company.phone1" class="btn btn-outline btn-lg hero-call-btn">
+            <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2.5" fill="none">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+            </svg>
+            <span>{{ i18n.t('hero.callBtn') }}</span>
+          </a>
+        </div>
+
+        <!-- Trust Badges -->
+        <div class="hero-trust-row">
+          <div class="trust-item">
+            <div class="trust-icon">💰</div>
+            <div class="trust-text">
+              <strong>{{ i18n.t('hero.trustRate') }}</strong>
+              <span>{{ i18n.t('hero.trustRateSub') }}</span>
+            </div>
+          </div>
+          <div class="trust-item">
+            <div class="trust-icon">🛡️</div>
+            <div class="trust-text">
+              <strong>{{ i18n.t('hero.trustVerified') }}</strong>
+              <span>{{ i18n.t('hero.trustVerifiedSub') }}</span>
+            </div>
+          </div>
+          <div class="trust-item">
+            <div class="trust-icon">⚡</div>
+            <div class="trust-text">
+              <strong>{{ i18n.t('hero.trustPickup') }}</strong>
+              <span>{{ i18n.t('hero.trustPickupSub') }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Side: Interactive Fare Calculator Card -->
+      <div class="hero-calculator-column" id="fare-calculator-section">
+        <div class="calculator-card glass-card">
+          <div class="calc-header">
+            <div class="calc-header-tag">
+              <span class="tag-icon">⚡</span>
+              <span>{{ i18n.t('calc.tag') }}</span>
+            </div>
+            <h3>{{ i18n.t('calc.title') }}</h3>
+            <p class="calc-rate-badge"><strong>{{ i18n.t('calc.officialRate') }}</strong></p>
+          </div>
+
+          <!-- Trip Type Selector -->
+          <div class="trip-type-toggle">
+            <button type="button" 
+                    class="trip-btn" 
+                    [class.active]="tripType() === 'oneway'"
+                    (click)="setTripType('oneway')">
+              {{ i18n.t('calc.oneWay') }}
+            </button>
+            <button type="button" 
+                    class="trip-btn" 
+                    [class.active]="tripType() === 'round'"
+                    (click)="setTripType('round')">
+              {{ i18n.t('calc.roundTrip') }}
+            </button>
+          </div>
+
+          <!-- Vehicle Category Selection Pills -->
+          <div class="calc-vehicle-selection">
+            <label class="calc-label">{{ i18n.t('calc.selectCab') }}</label>
+            <div class="vehicle-pills-grid">
+              @for (v of taxiData.vehicleCategories; track v.id) {
+                <button type="button" 
+                        class="vehicle-pill" 
+                        [class.selected]="selectedVehicleId() === v.id"
+                        (click)="setVehicle(v.id)">
+                  <span class="v-name">{{ v.name }}</span>
+                  <span class="v-rate">₹{{ v.ratePerKm }}/KM</span>
+                </button>
+              }
+            </div>
+          </div>
+
+          <!-- Pickup & Destination City Dropdowns with Auto Distance & Fare Calculation -->
+          <div class="calc-inputs-row">
+            <div class="calc-input-group">
+              <label class="calc-label-with-icon">
+                <span class="dot-indicator dot-pickup"></span>
+                <span>{{ i18n.t('calc.pickup') }}</span>
+              </label>
+              <div class="custom-select-wrapper">
+                <select 
+                  class="calc-select" 
+                  [ngModel]="selectedPickupId()" 
+                  (ngModelChange)="onPickupChange($event)">
+                  @for (loc of locations; track loc.id) {
+                    <option [value]="loc.id">
+                      {{ i18n.isTamil() ? loc.nameTa : loc.nameEn }}
+                    </option>
+                  }
+                </select>
+                <div class="select-chevron">
+                  <svg viewBox="0 0 20 20" width="16" height="16" fill="currentColor">
+                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                  </svg>
+                </div>
+              </div>
+
+              @if (selectedPickupId() === 'others') {
+                <input 
+                  type="text" 
+                  [ngModel]="customPickupText()" 
+                  (ngModelChange)="customPickupText.set($event)"
+                  [placeholder]="i18n.isTamil() ? 'ஊர் பெயர் தட்டச்சு செய்யவும்...' : 'Type your pickup town / location...'" 
+                  class="input-field custom-location-input" />
+              }
+            </div>
+
+            <div class="calc-input-group">
+              <label class="calc-label-with-icon">
+                <span class="dot-indicator dot-drop"></span>
+                <span>{{ i18n.t('calc.drop') }}</span>
+              </label>
+              <div class="custom-select-wrapper">
+                <select 
+                  class="calc-select" 
+                  [ngModel]="selectedDropId()" 
+                  (ngModelChange)="onDropChange($event)">
+                  @for (loc of locations; track loc.id) {
+                    <option [value]="loc.id">
+                      {{ i18n.isTamil() ? loc.nameTa : loc.nameEn }}
+                    </option>
+                  }
+                </select>
+                <div class="select-chevron">
+                  <svg viewBox="0 0 20 20" width="16" height="16" fill="currentColor">
+                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                  </svg>
+                </div>
+              </div>
+
+              @if (selectedDropId() === 'others') {
+                <input 
+                  type="text" 
+                  [ngModel]="customDropText()" 
+                  (ngModelChange)="customDropText.set($event)"
+                  [placeholder]="i18n.isTamil() ? 'ஊர் பெயர் தட்டச்சு செய்யவும்...' : 'Type your destination town / location...'" 
+                  class="input-field custom-location-input" />
+              }
+            </div>
+          </div>
+
+          <!-- Distance Slider & Manual Input -->
+          <div class="distance-slider-box">
+            <div class="distance-header">
+              <label class="calc-label">{{ i18n.t('calc.distance') }}</label>
+              <div class="distance-number-badge">
+                <input type="number" 
+                       [ngModel]="distanceKm()" 
+                       (ngModelChange)="updateDistance($event)" 
+                       min="1" 
+                       max="1500" 
+                       class="distance-input-field" />
+                <span class="unit">KM</span>
+              </div>
+            </div>
+
+            <input type="range" 
+                   [ngModel]="distanceKm()" 
+                   (ngModelChange)="updateDistance($event)" 
+                   min="5" 
+                   max="650" 
+                   step="5" 
+                   class="distance-range-slider" />
+
+            <div class="slider-marks">
+              <span>{{ i18n.isTamil() ? 'உள்ளூர் (10 கி.மீ)' : 'Local (10 KM)' }}</span>
+              <span>{{ i18n.isTamil() ? 'மதுரை (120 கி.மீ)' : 'Madurai (120 KM)' }}</span>
+              <span>{{ i18n.isTamil() ? 'சென்னை (620 கி.மீ)' : 'Chennai (620 KM)' }}</span>
+            </div>
+          </div>
+
+          <!-- Estimated Fare Output Result Box -->
+          <div class="fare-result-box">
+            <div class="fare-result-left">
+              <span class="fare-formula-label">{{ i18n.t('calc.formula') }} {{ calculatedFare.distanceKm }} KM × ₹{{ calculatedFare.ratePerKm }}</span>
+              <div class="estimated-price">
+                <span class="currency-symbol">₹</span>
+                <span class="amount-number">{{ calculatedFare.estimatedTotal }}</span>
+              </div>
+              <span class="fare-subtext">{{ i18n.t('calc.includes') }}</span>
+            </div>
+
+            <button (click)="dispatchWhatsAppBooking()" class="btn btn-whatsapp calc-book-btn">
+              <span>{{ i18n.t('calc.whatsappBtn') }}</span>
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

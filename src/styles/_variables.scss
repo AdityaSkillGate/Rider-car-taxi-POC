@@ -1,0 +1,53 @@
+// Rider Call Taxi Design System Variables
+// Primary Brand Colors
+$color-primary: #FFC107;         // Taxi Yellow
+$color-primary-light: #FFD54F;   // Bright Amber Glow
+$color-primary-dark: #FFA000;    // Deep Taxi Yellow
+$color-secondary: #D32F2F;       // Temple Red (Sankaranarayanaswamy Gopuram heritage)
+$color-secondary-dark: #B71C1C;  // Deep Temple Crimson
+$color-accent: #FF6B35;          // High-visibility Safety Orange
+$color-accent-hover: #E85A20;
+
+// Neutrals & Surfaces
+$color-white: #FFFFFF;
+$color-surface: #F8FAFC;
+$color-surface-card: rgba(255, 255, 255, 0.88);
+$color-surface-glass: rgba(255, 255, 255, 0.75);
+$color-surface-dark: #0F172A;     // Midnight Slate for contrast elements
+$color-surface-dark-glass: rgba(15, 23, 42, 0.85);
+
+// Text Hierarchy
+$color-text-primary: #0F172A;    // Slate 900
+$color-text-secondary: #475569;  // Slate 600
+$color-text-muted: #64748B;      // Slate 500
+$color-text-light: #F8FAFC;
+
+// Borders & Glass
+$border-glass: 1px solid rgba(255, 255, 255, 0.6);
+$border-glass-dark: 1px solid rgba(255, 255, 255, 0.12);
+$border-subtle: 1px solid rgba(226, 232, 240, 0.8);
+
+// Shadows & Glows
+$shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.05);
+$shadow-md: 0 8px 24px rgba(15, 23, 42, 0.08);
+$shadow-lg: 0 16px 40px rgba(15, 23, 42, 0.12);
+$shadow-xl: 0 24px 60px rgba(15, 23, 42, 0.16);
+$shadow-glow-yellow: 0 0 35px rgba(255, 193, 7, 0.35);
+$shadow-glow-red: 0 0 30px rgba(211, 47, 47, 0.3);
+
+// Radii
+$radius-sm: 8px;
+$radius-md: 14px;
+$radius-lg: 20px;
+$radius-xl: 28px;
+$radius-full: 9999px;
+
+// Typography
+$font-main: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+$font-heading: 'Outfit', sans-serif;
+$font-tamil: 'Noto Sans Tamil', sans-serif;
+
+// Transitions
+$transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+$transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+$transition-bounce: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
